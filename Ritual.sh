@@ -122,7 +122,11 @@ install_ritual_2() {
 
 	# 임시 파일 생성
 	temp_file=$(mktemp)
-
+	
+	# snapshot_sync 삭제하기
+	jq 'del(.snapshot_sync)' $json_1 > temp.json
+	mv temp.json $json_1
+	
 	# jq를 사용하여 image, sleep, batch_size를 수정하고 임시 파일에 저장
 	jq --arg img "ritualnetwork/hello-world-infernet:1.2.0" \
 	   --argjson sleep 3 \
@@ -134,6 +138,11 @@ install_ritual_2() {
 	# temp_file을 원본 파일로 덮어쓰고 임시 파일 삭제
 	mv $temp_file $json_1
 
+	# snapshot_sync 삭제하기
+	jq 'del(.snapshot_sync)' $json_2 > temp.json
+	mv temp.json $json_2
+	
+	
 	# 두 번째 파일에도 같은 변경 사항 적용
 	jq --arg img "ritualnetwork/hello-world-infernet:1.2.0" \
 	   --argjson sleep 3 \
@@ -156,10 +165,11 @@ install_ritual_2() {
     Deploy_s_sol=~/infernet-container-starter/projects/hello-world/contracts/script/Deploy.s.sol
 
     # 새로운 registry 주소
-    new_registry_address="0x3B1554f346DFe5c482Bb4BA31b880c1C18412170"
+    old_registry="0x663F3ad617193148711d28f5334eE4Ed07016602"
+	new_registry="0x3B1554f346DFe5c482Bb4BA31b880c1C18412170"
 
     # sed 명령어를 사용하여 registry 주소를 수정
-    sed -i "s/address registry = 0x663F3ad617193148711d28f5334eE4Ed07016602;/address registry = $new_registry_address;/g" $Deploy_s_sol
+    sed "s/$old_registry/$new_registry/" "$deploy_s_sol" | sudo tee "$Deploy_s_sol" > /dev/null
 
     echo -e "${BOLD}${MAGENTA}Deploy.s.sol 업데이트 완료${NC}"
 
@@ -201,7 +211,7 @@ install_ritual_2() {
 }
 
 # 메인 메뉴
-echo && echo -e "${BOLD}${MAGENTA}Ritual Node 자동 설치 123스크립트${NC} by 비욘세제발죽어
+echo && echo -e "${BOLD}${MAGENTA}Ritual Node 자동 설치 fda123스크립트${NC} by 비욘세제발죽어
  ${CYAN}원하는 거 고르시고 실행하시고 그러세효. ${NC}
  ———————————————————————
  ${GREEN} 1. 기본파일 설치 및 Ritual Node 설치 ${NC}
