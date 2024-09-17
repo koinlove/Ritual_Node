@@ -19,7 +19,7 @@
 ```bash
 screen -S ritual
 ```
-을 입력한 뒤에
+을 입력한 뒤에 아무 것도 없는 검은 화면이 뜨면
 ```bash
 project=hello-world make deploy-container
 ```
