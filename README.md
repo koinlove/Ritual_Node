@@ -24,3 +24,6 @@ screen -S ritual
 project=hello-world make deploy-container
 ```
 를 입력해서 컨테이너 계약까지 끝마치기!
+
+![image](https://github.com/user-attachments/assets/59008c6a-2dc4-424a-9772-393d6cd87d65)
+이런 식으로 괴상한 화면이 떠도 무시하고 > **CTRL + A + D**로 화면 나오기!
