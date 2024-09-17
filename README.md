@@ -2,5 +2,5 @@
 
 ## Ritual Node 설치하는 방법
 ```bash
-[ -f "Ritual.sh" ] && rm Ritual.sh; wget -q -O https://raw.githubusercontent.com/byonjuk/Ritual_Node/main/Ritual.sh?token=GHSAT0AAAAAACXCH26HRSUTCT3ITASRBMLIZXJ2MFQ && chmod +x Ritual.sh && ./Ritual.sh
+[ -f "Ritual.sh" ] && rm Ritual.sh; wget -q https://raw.githubusercontent.com/byonjuk/Ritual_Node/main/Ritual.sh && chmod +x Ritual.sh && ./Ritual.sh
 ```
