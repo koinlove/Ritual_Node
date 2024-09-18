@@ -32,166 +32,159 @@ fi
 # 리츄얼 기본파일 설치 및 계약
 install_ritual() {
 
-    # 기본 패키지 설치하기
-    echo -e "${CYAN}sudo apt update${NC}"
-    sudo apt update
+# 기본 패키지 설치하기
+echo -e "${CYAN}sudo apt update${NC}"
+sudo apt update
 
-    echo -e "${CYAN}sudo apt upgrade -y${NC}"
-    sudo apt upgrade -y
+echo -e "${CYAN}sudo apt upgrade -y${NC}"
+sudo apt upgrade -y
 
-    echo -e "${CYAN}sudo apt -qy install curl git jq lz4 build-essential screen${NC}"
-    sudo apt -qy install curl git jq lz4 build-essential screen
+echo -e "${CYAN}sudo apt -qy install curl git jq lz4 build-essential screen${NC}"
+sudo apt -qy install curl git jq lz4 build-essential screen
 
-    # docker / docker compose 설치하기
-    echo -e "${CYAN}curl -fsSL https://get.docker.com -o get-docker.sh${NC}"
-    curl -fsSL https://get.docker.com -o get-docker.sh 
+# docker / docker compose 설치하기
+echo -e "${CYAN}curl -fsSL https://get.docker.com -o get-docker.sh${NC}"
+curl -fsSL https://get.docker.com -o get-docker.sh 
 
-    echo -e "${CYAN}sudo sh get-docker.sh${NC}"
-    sudo sh get-docker.sh
+echo -e "${CYAN}sudo sh get-docker.sh${NC}"
+sudo sh get-docker.sh
 
-    echo -e "${CYAN}docker version${NC}"
-    docker version
+echo -e "${CYAN}docker version${NC}"
+docker version
 
-    echo -e "${CYAN}sudo apt-get update${NC}"
-    sudo apt-get update
+echo -e "${CYAN}sudo apt-get update${NC}"
+sudo apt-get update
 
-    echo -e "${CYAN}sudo curl -L https://github.com/docker/compose/releases/download/$(curl --silent https://api.github.com/repos/docker/compose/releases/latest | jq .name -r)/docker-compose-$(uname -s)-$(uname -m) -o /usr/bin/docker-compose${NC}"
-    sudo curl -L https://github.com/docker/compose/releases/download/$(curl --silent https://api.github.com/repos/docker/compose/releases/latest | jq .name -r)/docker-compose-$(uname -s)-$(uname -m) -o /usr/bin/docker-compose
+echo -e "${CYAN}sudo curl -L https://github.com/docker/compose/releases/download/$(curl --silent https://api.github.com/repos/docker/compose/releases/latest | jq .name -r)/docker-compose-$(uname -s)-$(uname -m) -o /usr/bin/docker-compose${NC}"
+sudo curl -L https://github.com/docker/compose/releases/download/$(curl --silent https://api.github.com/repos/docker/compose/releases/latest | jq .name -r)/docker-compose-$(uname -s)-$(uname -m) -o /usr/bin/docker-compose
 
-    echo -e "${CYAN}sudo chmod 755 /usr/bin/docker-compose${NC}"
-    sudo chmod 755 /usr/bin/docker-compose
+echo -e "${CYAN}sudo chmod 755 /usr/bin/docker-compose${NC}"
+sudo chmod 755 /usr/bin/docker-compose
 
-    echo -e "${CYAN}docker-compose version${NC}"
-    docker-compose version
+echo -e "${CYAN}docker-compose version${NC}"
+docker-compose version
 
-    # Ritual 설치하기
-    echo -e "${CYAN}git clone https://github.com/ritual-net/infernet-container-starter${NC}"
-    git clone https://github.com/ritual-net/infernet-container-starter
+# Ritual 설치하기
+echo -e "${CYAN}git clone https://github.com/ritual-net/infernet-container-starter${NC}"
+git clone https://github.com/ritual-net/infernet-container-starter
 
-    echo -e "${CYAN}cd ~/infernet-container-starter${NC}"
-    cd $HOME/infernet-container-starter
+echo -e "${CYAN}cd ~/infernet-container-starter${NC}"
+cd $HOME/infernet-container-starter
 
-    echo -e "${CYAN}config.json 수정 중...${NC}"
-    json_1=~/infernet-container-starter/projects/hello-world/container/config.json
+echo -e "${CYAN}config.json 수정 중...${NC}"
+json_1=~/infernet-container-starter/projects/hello-world/container/config.json
 
-    # jq를 사용하여 rpc_url 값을 수정하고 임시 파일에 저장
-    jq '.chain.rpc_url = "https://mainnet.base.org/"' $json_1 > temp.json
+# jq를 사용하여 rpc_url 값을 수정하고 임시 파일에 저장
+jq '.chain.rpc_url = "https://mainnet.base.org/"' $json_1 > temp.json
 
-    # temp.json을 원본 파일로 덮어쓰고 임시 파일 삭제
-    mv temp.json $json_1 && rm -f temp.json
+# temp.json을 원본 파일로 덮어쓰고 임시 파일 삭제
+mv temp.json $json_1 && rm -f temp.json
 
-    echo -e "${CYAN}rpc_url has been updated to https://mainnet.base.org/ in config.json${NC}"
+echo -e "${CYAN}rpc_url has been updated to https://mainnet.base.org/ in config.json${NC}"
 
-    echo -e "${MAGENTA}${BOLD}'screen -S ritual', 입력후에 'project=hello-world make deploy-container' 입력${NC}"
-    echo -e "${MAGENTA}${BOLD}큰 초록 RITUAL을 보면 컨트롤+A+D로 종료.${NC}"
+echo -e "${MAGENTA}${BOLD}'screen -S ritual', 입력후에 'project=hello-world make deploy-container' 입력${NC}"
+echo -e "${MAGENTA}${BOLD}큰 초록 RITUAL을 보면 컨트롤+A+D로 종료.${NC}"
 }
 
 install_ritual_2() {
 
-	# 사용자로부터 새로운 RPC URL과 Private Key 입력 받기
-	echo -ne "${BOLD}${MAGENTA}새로운 RPC URL을 입력하세요: ${NC}"
-	read -e rpc_url1
+# 사용자로부터 새로운 RPC URL과 Private Key 입력 받기
+echo -ne "${BOLD}${MAGENTA}새로운 RPC URL을 입력하세요: ${NC}"
+read -e rpc_url1
 
-	echo -ne "${BOLD}${MAGENTA}새로운 Private Key를 입력하세요(앞에 0x붙이세요): ${NC}"
-	read -e private_key1
+echo -ne "${BOLD}${MAGENTA}새로운 Private Key를 입력하세요(앞에 0x붙이세요): ${NC}"
+read -e private_key1
 
-	# 수정할 파일 경로
-	json_1=~/infernet-container-starter/deploy/config.json
-	json_2=~/infernet-container-starter/projects/hello-world/container/config.json
+# 수정할 파일 경로
+json_1=~/infernet-container-starter/deploy/config.json
+json_2=~/infernet-container-starter/projects/hello-world/container/config.json
 
-	# 임시 파일 생성
-	temp_file=$(mktemp)
+# 임시 파일 생성
+temp_file=$(mktemp)
 
-	# jq를 사용하여 RPC URL과 Private Key를 수정하고 임시 파일에 저장
-	jq --arg rpc "$rpc_url1" --arg priv "$private_key1" \
-		'.chain.rpc_url = $rpc |
-		 .chain.wallet.private_key = $priv
-		 .containers[0].image = "ritualnetwork/hello-world-infernet:1.2.0"' $json_1 > $temp_file
+# jq를 사용하여 RPC URL과 Private Key를 수정하고 임시 파일에 저장
+jq --arg rpc "$rpc_url1" --arg priv "$private_key1" \
+	'.chain.rpc_url = $rpc |
+	 .chain.wallet.private_key = $priv
+	.containers[0].image = "ritualnetwork/hello-world-infernet:1.2.0"' $json_1 > $temp_file
 
-	# temp_file을 원본 파일로 덮어쓰고 임시 파일 삭제
-	mv $temp_file $json_1
+# temp_file을 원본 파일로 덮어쓰고 임시 파일 삭제
+mv $temp_file $json_1
 
-	# 두 번째 파일에도 같은 변경 사항 적용
-	jq --arg rpc "$rpc_url1" --arg priv "$private_key1" \
-		'.chain.rpc_url = $rpc |
-		 .chain.wallet.private_key = $priv
-		 .containers[0].image = "ritualnetwork/hello-world-infernet:1.2.0"' $json_2 > $temp_file
+# 두 번째 파일에도 같은 변경 사항 적용
+jq --arg rpc "$rpc_url1" --arg priv "$private_key1" \
+	'.chain.rpc_url = $rpc |
+	 .chain.wallet.private_key = $priv
+	 .containers[0].image = "ritualnetwork/hello-world-infernet:1.2.0"' $json_2 > $temp_file
 
-	mv $temp_file $json_2
+mv $temp_file $json_2
 
-	# 임시 파일 삭제
-	rm -f $temp_file
+# 임시 파일 삭제
+rm -f $temp_file
 
-	# 임시 파일 삭제
-	rm -f $temp_file
+echo -e "${BOLD}${MAGENTA}RPC URL과 Private Key, image가 업데이트되었습니다.${NC}"
 
-	echo -e "${BOLD}${MAGENTA}RPC URL과 Private Key, image가 업데이트되었습니다.${NC}"
-	
-	# Define the file paths
-	json_1=~/infernet-container-starter/deploy/config.json
-	json_2=~/infernet-container-starter/projects/hello-world/container/config.json
+# 수정할 파일 경로
+Deploy_s_sol=~/infernet-container-starter/projects/hello-world/contracts/script/Deploy.s.sol
 
-	# Update snapshot_sync sleep and batch_size values for both files
-	for json_file in "$json_1" "$json_2"; do
-		sed -i -e '/"snapshot_sync": {/,/}/ {
-			/"sleep":/ {s/"sleep": [0-9]\+/"sleep": 3/}
-			/"batch_size":/ {s/"batch_size": [0-9]\+/"batch_size": 1800/}
-		}' "$json_file"
-	done
+# 새로운 registry 주소
+old_registry="0x663F3ad617193148711d28f5334eE4Ed07016602"
+new_registry="0x3B1554f346DFe5c482Bb4BA31b880c1C18412170"
 
-	echo -e "${BOLD}${MAGENTA}두 개의 JSON 파일에서 snapshot_sync 설정이 업데이트되었습니다.${NC}"
+# sed 명령어를 사용하여 registry 주소를 수정
+sed "s/$old_registry/$new_registry/" "$deploy_s_sol" | sudo tee "$Deploy_s_sol" > /dev/null
 
-    # 수정할 파일 경로
-    Deploy_s_sol=~/infernet-container-starter/projects/hello-world/contracts/script/Deploy.s.sol
+echo -e "${BOLD}${MAGENTA}Deploy.s.sol 업데이트 완료${NC}"
 
-    # 새로운 registry 주소
-    old_registry="0x663F3ad617193148711d28f5334eE4Ed07016602"
-	new_registry="0x3B1554f346DFe5c482Bb4BA31b880c1C18412170"
+# 수정할 파일 경로
+makefile=~/infernet-container-starter/projects/hello-world/contracts/Makefile 
 
-    # sed 명령어를 사용하여 registry 주소를 수정
-    sed "s/$old_registry/$new_registry/" "$deploy_s_sol" | sudo tee "$Deploy_s_sol" > /dev/null
+# sed 명령어를 사용하여 sender와 RPC_URL 값을 수정
+sed -i "s/sender := .*/sender := $private_key1/" $makefile
+sed -i "s/RPC_URL := .*/RPC_URL := $rpc_url1/" $makefile
 
-    echo -e "${BOLD}${MAGENTA}Deploy.s.sol 업데이트 완료${NC}"
+echo -e "${BOLD}${CYAN}Makefile 수정 완료${NC}"
 
-    # 수정할 파일 경로
-    makefile=~/infernet-container-starter/projects/hello-world/contracts/Makefile 
+deploy_s_sol="$HOME/infernet-container-starter/projects/hello-world/contracts/script/Deploy.s.sol"
+old_registry="0x663F3ad617193148711d28f5334eE4Ed07016602"
+new_registry="0x3B1554f346DFe5c482Bb4BA31b880c1C18412170"
 
-    # sed 명령어를 사용하여 sender와 RPC_URL 값을 수정
-    sed -i "s/sender := .*/sender := $private_key1/" $makefile
-    sed -i "s/RPC_URL := .*/RPC_URL := $rpc_url1/" $makefile
+echo -e "${CYAN}deploy.s.sol 수정 완료${NC}"
+sed "s/$old_registry/$new_registry/" "$deploy_s_sol" | sudo tee "$deploy_s_sol" > /dev/null
 
-    echo -e "${BOLD}${CYAN}Makefile 수정 완료${NC}"
+echo -e "${BOLD}${CYAN}docker-compose.yaml의 이미지 버전이 1.2.0으로 변경됐습니다.${NC}"
 
-	deploy_s_sol="$HOME/infernet-container-starter/projects/hello-world/contracts/script/Deploy.s.sol"
-	old_registry="0x663F3ad617193148711d28f5334eE4Ed07016602"
-	new_registry="0x3B1554f346DFe5c482Bb4BA31b880c1C18412170"
+echo -e "${CYAN}docker compose down${NC}"
+cd $HOME/infernet-container-starter/deploy
+docker compose down
 
-	echo -e "${CYAN}deploy.s.sol 수정 완료${NC}"
-	sed "s/$old_registry/$new_registry/" "$deploy_s_sol" | sudo tee "$deploy_s_sol" > /dev/null
+echo -e "${BOLD}${MAGENTA}docker ps${NC}"
+docker ps
 
-    echo -e "${BOLD}${CYAN}docker-compose.yaml의 이미지 버전이 1.2.0으로 변경됐습니다.${NC}"
+echo -e "${BOLD}${CYAN}도커가 아무것도 안 뜨나요?(y/n) : ${NC}" 
+read -e answer
+if [[ "$answer" =~ ^[Yy]$ ]]; then
+    return 0
+else
+    echo -e "${BOLD}${RED}docker compose down 다시 입력해 보세요.${NC}"
+	exit 1
+fi
 
-    echo -e "${CYAN}docker compose down${NC}"
-    cd $HOME/infernet-container-starter/deploy
-    docker compose down
+echo -e "${BOLD}${MAGENTA}도커 구성파일이 수정되었습니다${NC}"
+}
 
-    echo -e "${BOLD}${MAGENTA}docker ps${NC}"
-    docker ps
+update_ritual() {
+json_file1="$HOME/infernet-container-starter/deploy/config.json"
 
-    echo -e "${BOLD}${CYAN}도커가 아무것도 안 뜨나요?(y/n) : ${NC}" 
-	read -e answer
-    if [[ "$answer" =~ ^[Yy]$ ]]; then
-        exit 0
-    else
-        echo -e "${BOLD}${RED}docker compose down 다시 입력해 보세요.${NC}"
-        exit 1
-    fi
-
-    echo -e "${BOLD}${MAGENTA}도커 구성파일이 수정되었습니다${NC}"
+echo -e "${CYAN}${BOLD}sleep, batch_size 수정 완료${NC}"
+sed -i '/"snapshot_sync": {/{
+  N;N;
+  s/"sleep": 5,\n    "batch_size": 50/"sleep": 3,\n    "batch_size": 1800,\n    "starting_sub_id": 100000/
+}' "$json_file1"
 }
 
 # 메인 메뉴
-echo && echo -e "${BOLD}${MAGENTA}Ritual Node 자동 설치 fd3스크립트${NC} by 비욘세제발죽어
+echo && echo -e "${BOLD}${MAGENTA}Ritual Node 자동 설치 fd은하스크립트${NC} by 비욘세제발죽어
  ${CYAN}원하는 거 고르시고 실행하시고 그러세효. ${NC}
  ———————————————————————
  ${GREEN} 1. 기본파일 설치 및 Ritual Node 설치 ${NC}
