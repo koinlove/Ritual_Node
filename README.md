@@ -18,6 +18,10 @@
 
 그 이후에
 ```bash
+cd ~/infernet-container-starter
+```
+를 입력하고
+```bash
 screen -S ritual
 ```
 을 입력한 뒤에 아무 것도 없는 검은 화면이 뜨면
@@ -43,7 +47,7 @@ project=hello-world make deploy-container
 ![image](https://github.com/user-attachments/assets/6c3cb998-7561-4b2f-a3a4-c9cc38e4d4b3)
 입력을 완료하면 이런 식으로 막 진행될 텐데 매우 빠르게 진행되는 게 맞으니 ㄱㅊㄱㅊ. 이후에
 ```bash
-docker compose up
+cd ~/infernet-container-starter/deploy && docker compose up
 ```
 을 넣으면
 ![image](https://github.com/user-attachments/assets/d8892654-4dd8-4375-bee9-b957b0ca28f8)
@@ -82,7 +86,7 @@ docker compose up
 
 이후
 ```bash
-docker compose up
+cd ~/infernet-container-starter/deploy && docker compose up
 ```
 을 입력하면 자기 혼자서 또 켜질 거임.
 ![image](https://github.com/user-attachments/assets/d924dadc-bf84-4c15-9576-5d7a62a36b2b)
