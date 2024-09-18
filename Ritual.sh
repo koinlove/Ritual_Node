@@ -139,13 +139,13 @@ echo -e "${BOLD}${MAGENTA}RPC URL and Private key have been updated${NC}"
 makefile=~/infernet-container-starter/projects/hello-world/contracts/Makefile 
 
 # sed 명령어를 사용하여 sender와 RPC_URL 값을 수정
-sed -i "s/sender := .*/sender := $private_key1/" $makefile
-sed -i "s/RPC_URL := .*/RPC_URL := $rpc_url1/" $makefile
+sed -i "s|sender := .*|sender := $private_key1|" "$makefile"
+sed -i "s|RPC_URL := .*|RPC_URL := $rpc_url1|" "$makefile"
 
 echo -e "${BOLD}${CYAN}Makefile has been updated${NC}"
 
 # deploy.s.sol 수정하기
-deploy_s_sol="$~/infernet-container-starter/projects/hello-world/contracts/script/Deploy.s.sol"
+deploy_s_sol=~/infernet-container-starter/projects/hello-world/contracts/script/Deploy.s.sol
 old_registry="0x663F3ad617193148711d28f5334eE4Ed07016602"
 new_registry="0x3B1554f346DFe5c482Bb4BA31b880c1C18412170"
 
