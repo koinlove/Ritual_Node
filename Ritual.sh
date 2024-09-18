@@ -122,7 +122,7 @@ mv $temp_file $json_2
 # 임시 파일 삭제
 rm -f $temp_file
 
-echo -e "${BOLD}${MAGENTA}RPC URL과 Private Key, image가 업데이트되었습니다.${NC}"
+echo -e "${BOLD}${MAGENTA}RPC URL and Private key have been updated${NC}"
 
 # 수정할 파일 경로
 Deploy_s_sol=~/infernet-container-starter/projects/hello-world/contracts/script/Deploy.s.sol
@@ -134,7 +134,7 @@ new_registry="0x3B1554f346DFe5c482Bb4BA31b880c1C18412170"
 # sed 명령어를 사용하여 registry 주소를 수정
 sed "s/$old_registry/$new_registry/" "$deploy_s_sol" | sudo tee "$Deploy_s_sol" > /dev/null
 
-echo -e "${BOLD}${MAGENTA}Deploy.s.sol 업데이트 완료${NC}"
+echo -e "${BOLD}${MAGENTA}Deploy.s.sol has been updated${NC}"
 
 # 수정할 파일 경로
 makefile=~/infernet-container-starter/projects/hello-world/contracts/Makefile 
@@ -143,7 +143,7 @@ makefile=~/infernet-container-starter/projects/hello-world/contracts/Makefile
 sed -i "s/sender := .*/sender := $private_key1/" $makefile
 sed -i "s/RPC_URL := .*/RPC_URL := $rpc_url1/" $makefile
 
-echo -e "${BOLD}${CYAN}Makefile 수정 완료${NC}"
+echo -e "${BOLD}${CYAN}Makefile has been updated${NC}"
 
 deploy_s_sol="$HOME/infernet-container-starter/projects/hello-world/contracts/script/Deploy.s.sol"
 old_registry="0x663F3ad617193148711d28f5334eE4Ed07016602"
@@ -161,35 +161,245 @@ docker compose down
 echo -e "${BOLD}${MAGENTA}docker ps${NC}"
 docker ps
 
-echo -e "${BOLD}${CYAN}도커가 아무것도 안 뜨나요?(y/n) : ${NC}" 
-read -e answer
-if [[ "$answer" =~ ^[Yy]$ ]]; then
-    return 0
-else
-    echo -e "${BOLD}${RED}docker compose down 다시 입력해 보세요.${NC}"
-	exit 1
-fi
+echo -e "${BOLD}${MAGENTA}이제 터미널에 'docker compose up'을 입력하세요${NC}"
+echo -e "${BOLD}${MAGENTA}명령어를 입력하고 문구들이 주르륵 나오면 아무런 키도 누르지 말고 터미널을 종료한 뒤, 새로운 터미널을 켜서 다시 콘타보에 로그인하세요${NC}"
+}
 
-echo -e "${BOLD}${MAGENTA}도커 구성파일이 수정되었습니다${NC}"
+install_ritual_3() {
+# foundry 설치하기
+echo -e "${CYAN}cd $HOME${NC}"
+cd $HOME
+
+echo -e "${CYAN}mkdir foundry${NC}"
+mkdir foundry
+
+echo -e "${CYAN}cd $HOME/foundry${NC}"
+cd $HOME/foundry
+
+echo -e "${CYAN}curl -L https://foundry.paradigm.xyz | bash${NC}"
+curl -L https://foundry.paradigm.xyz | bash
+
+export PATH="/root/.foundry/bin:$PATH"
+
+echo -e "${CYAN}source ~/.bashrc${NC}"
+source ~/.bashrc
+
+echo -e "${CYAN}foundryup${NC}"
+foundryup
+
+echo -e "${CYAN}cd ~/infernet-container-starter/projects/hello-world/contracts${NC}"
+cd ~/infernet-container-starter/projects/hello-world/contracts
+
+echo -e "${CYAN}rm -rf lib${NC}"
+rm -rf lib
+
+echo -e "${CYAN}forge install --no-commit foundry-rs/forge-std${NC}"
+forge install --no-commit foundry-rs/forge-std
+
+echo -e "${CYAN}forge install --no-commit ritual-net/infernet-sdk${NC}"
+forge install --no-commit ritual-net/infernet-sdk
+
+export PATH="/root/.foundry/bin:$PATH"
+
+# 최종 계약하기
+echo -e "${CYAN}cd $HOME/infernet-container-starter${NC}"
+cd $HOME/infernet-container-starter
+
+echo -e "${CYAN}project=hello-world make deploy-contracts${NC}"
+project=hello-world make deploy-contracts
+
+# call-contract 수정하기
+echo -e "${CYAN}스크롤 위로 올려서 Logs 확인${NC}"
+echo -ne "${CYAN}deployed Sayshello 정확히 입력 Sayshello: ${NC}"
+read -e says_gm
+
+callcontractpath="/root/infernet-container-starter/projects/hello-world/contracts/script/CallContract.s.sol"
+
+echo -e "${CYAN}/root/infernet-container-starter/projects/hello-world/contracts/script/CallContract.s.sol 수정${NC}"
+sed "s/SaysGM saysGm = SaysGM(.*)/SaysGM saysGm = SaysGM($says_gm)/" "$callcontractpath" | sudo tee "$callcontractpath" > /dev/null
+
+# 계약 완료하기
+echo -e "${CYAN}project=hello-world make call-contract${NC}"
+project=hello-world make call-contract
+
+echo -e "${BOLD}$M{MAGENTA}리츄얼 설치가 완료됐습니다. 수고하셨습니다. (솔직히 님들이 무슨 수고를 함? 수고는 내가 한 거 아닌가 ㅋㅋ;;)${NC}"
+}
+
+restart_ritual() {
+echo -e "${CYAN}docker compose down${NC}"
+cd $HOME/infernet-container-starter/deploy
+docker compose down
+
+echo -e "${BOLD}${MAGENTA}docker ps${NC}"
+docker ps
+
+echo -e "${BOLD}${MAGENTA}이제 터미널에 'docker compose up'을 입력하세요${NC}"
+echo -e "${BOLD}${MAGENTA}명령어를 입력하고 문구들이 주르륵 나오면 아무런 키도 누르지 말고 터미널을 종료하세요${NC}"
+}
+
+change_Wallet_Address() {
+# 사용자로부터 새로운 Private key 입력받기
+echo -ne "${BOLD}${MAGENTA}새로운 Private Key를 입력하세요(앞에 0x붙이세요): ${NC}"
+read -e private_key1
+
+# 수정할 파일 경로
+json_1=~/infernet-container-starter/deploy/config.json
+json_2=~/infernet-container-starter/projects/hello-world/container/confi
+makefile=~/infernet-container-starter/projects/hello-world/contracts/Makefile 
+
+# 임시 파일 생성
+temp_file=$(mktemp)
+
+# jq를 사용하여 RPC URL과 Private Key를 수정하고 임시 파일에 저장
+jq --arg priv "$private_key1" \
+	'.chain.wallet.private_key = $priv' $json_1 > $temp_file
+
+# temp_file을 원본 파일로 덮어쓰고 임시 파일 삭제
+mv $temp_file $json_1
+
+# 두 번째 파일에도 같은 변경 사항 적용
+jq --arg priv "$private_key1" \
+	'.chain.wallet.private_key = $priv' $json_2 > $temp_file
+
+mv $temp_file $json_2
+
+# 임시 파일 삭제
+rm -f $temp_file
+
+echo -e "${BOLD}${MAGENTA} Private key has been updated ${NC}"
+
+# sed 명령어를 사용하여 sender의 값을 수정
+sed -i "s/sender := .*/sender := $private_key1/" $makefile
+
+echo -e "${BOLD}${MAGENTA} makefile's Private Key has been updated ${NC}"
+
+# 계약 다시 하기
+echo -e "${CYAN}cd $HOME/infernet-container-starter${NC}"
+cd $HOME/infernet-container-starter
+
+echo -e "${CYAN}project=hello-world make deploy-contracts${NC}"
+project=hello-world make deploy-contracts
+
+# call-contract 수정하기
+echo -e "${CYAN}스크롤 위로 올려서 Logs 확인${NC}"
+echo -ne "${CYAN}deployed Sayshello 정확히 입력 Sayshello: ${NC}"
+read -e says_gm
+
+callcontractpath="/root/infernet-container-starter/projects/hello-world/contracts/script/CallContract.s.sol"
+
+echo -e "${CYAN}/root/infernet-container-starter/projects/hello-world/contracts/script/CallContract.s.sol 수정${NC}"
+sed "s/SaysGM saysGm = SaysGM(.*)/SaysGM saysGm = SaysGM($says_gm)/" "$callcontractpath" | sudo tee "$callcontractpath" > /dev/null
+
+# 계약 완료하기
+echo -e "${CYAN}project=hello-world make call-contract${NC}"
+project=hello-world make call-contract
+
+echo -e "${BOLD}$M{MAGENTA}리츄얼 설치가 완료됐습니다. 수고하셨습니다. (솔직히 님들이 무슨 수고를 함? 수고는 내가 한 거 아닌가 ㅋㅋ;;)${NC}"
+}
+
+change_RPC_Address() {
+# 사용자로부터 새로운 RPC URL 입력받기
+echo -ne "${BOLD}${MAGENTA}새로운 RPC URL을 입력하세요: ${NC}"
+read -e rpc_url1
+
+# 수정할 파일 경로
+json_1=~/infernet-container-starter/deploy/config.json
+json_2=~/infernet-container-starter/projects/hello-world/container/confi
+makefile=~/infernet-container-starter/projects/hello-world/contracts/Makefile 
+
+# 임시 파일 생성
+temp_file=$(mktemp)
+
+# jq를 사용하여 RPC URL과 Private Key를 수정하고 임시 파일에 저장
+jq --arg rpc "$rpc_url1" \
+	'.chain.rpc_url = $rpc' $json_1 > $temp_file
+
+# temp_file을 원본 파일로 덮어쓰고 임시 파일 삭제
+mv $temp_file $json_1
+
+# 두 번째 파일에도 같은 변경 사항 적용
+jq --arg rpc "$rpc_url1" \
+	'.chain.rpc_url = $rpc' $json_2 > $temp_file
+
+mv $temp_file $json_2
+
+# 임시 파일 삭제
+rm -f $temp_file
+
+echo -e "${BOLD}${MAGENTA} RPC URL has been updated ${NC}"
+
+# sed 명령어를 사용하여 RPC_URL 값을 수정
+sed -i "s/RPC_URL := .*/RPC_URL := $rpc_url1/" $makefile
+
+echo -e "${BOLD}${MAGENTA} makefile's RPC URL has been updated ${NC}"
+
+echo -e  "{CYAN}docker restart infernet-anvil${NC}"
+docker restart infernet-anvil
+
+echo -e  "{CYAN}docker restart hello-world${NC}"
+docker restart hello-world
+
+echo -e  "{CYAN}docker restart infernet-node${NC}"
+docker restart infernet-node
+
+echo -e  "{CYAN}docker restart deploy-fluentbit-1${NC}"
+docker restart deploy-fluentbit-1
+
+echo -e  "{CYAN}docker restart deploy-redis-1${NC}"
+docker restart deploy-redis-1
+
+echo -e "${BOLD}${MAGENTA} PRC URL 수정 완료. ${NC}"
+echo -e "${BOLD}${MAGENTA} RPC URK 수정하고도 안 되면 명령어 다시 쳐서 4번 실행하삼 ${NC}"
 }
 
 update_ritual() {
-json_file1="$HOME/infernet-container-starter/projects/hello-world/container/config.json"
-
-echo -e "${CYAN}${BOLD}sleep, batch_size 수정 완료${NC}"
-sed -i '/"snapshot_sync": {/{
-  N;N;
-  s/"sleep": 3,\n    "batch_size": 100/"sleep": 3,\n    "batch_size": 1800,\n    "starting_sub_id": 100000/
-}' "$json_file1"
+echo -e "${BOLD}${RED}리츄얼 업데이트는 아직 나온 게 없어요 ㅎㅎ 나중에 나오면 안내해 드릴게요~${NC}"
 }
 
+uninstall_ritual() {
+
+# docker들 모두 삭제하기
+echo -e "${BOLD}${CYAN}Remove Ritual dockers...${NC}"
+docker rm -f infernet-anvil
+docker rm -f infernet-node
+docker rm -f hello-world
+docker rm -f deploy-redis-1
+docker rm -f deploy-fluentbit-1
+
+echo -e "${BOLD}${CYAN}Removing ritual docker images...${NC}"
+docker image ls -a | grep "infernet" | awk '{print $3}' | xargs docker rmi -f
+docker image ls -a | grep "infernet" | awk '{print $3}' | xargs docker rmi -f
+docker image ls -a | grep "fluent-bit" | awk '{print $3}' | xargs docker rmi -f
+
+# foundry 파일 삭제하기
+echo -e "${CYAN}rm -rf $HOME/foundry${NC}"
+rm -rf $HOME/foundry
+
+echo -e "${CYAN}sed -i '/\/root\/.foundry\/bin/d' ~/.bashrc${NC}"
+sed -i '/\/root\/.foundry\/bin/d' ~/.bashrc
+
+echo -e "${CYAN}rm -rf ~/infernet-container-starter/projects/hello-world/contracts/lib${NC}"
+rm -rf ~/infernet-container-starter/projects/hello-world/contracts/lib
+
+echo -e "${CYAN}forge clean${NC}"
+forge clean
+
+# 리츄얼 노드 파일 지우기
+echo -e "${BOLD}${CYAN}Removing infernet-container-starter directory...${NC}"
+sudo rm -rf infernet-container-starter
+
+
+echo -e "${BOLD}${CYAN} Ritual Node와 관련된 파일들이 삭제됐습니다. (혹시 몰라서 도커 명령어는 삭제 안 했습니다.)${NC}"
+echo -e "${BOLD}${RED} 리츄얼 다시 깔겠다고 명령어 다시 실행하지 마세요! docker 패키지는 삭제 안 해서 설치 명령어 다시 실행했다가 오류날 수도 있음 ${NC}"
+echo -e "${BOLD}${YELLOW} 리츄얼 다시 깔려면 콘타보를 아예 리인스톨하고 새로운 상태에서 설치하세요! ${NC}"
+}
 # 메인 메뉴
 echo && echo -e "${BOLD}${MAGENTA}Ritual Node 자동 설치 fd은하똥스크립트${NC} by 비욘세제발죽어
  ${CYAN}원하는 거 고르시고 실행하시고 그러세효. ${NC}
  ———————————————————————
- ${GREEN} 1. 기본파일 설치 및 Ritual Node 설치 ${NC}
- ${GREEN} 2. Ritual Node 구성파일 수정하기 ${NC}
- ${GREEN} 3. Ritual Node 계약하기(작업 완료) ${NC}
+ ${GREEN} 1. 기본파일 설치 및 Ritual Node 설치 1번 ${NC}
+ ${GREEN} 2. Ritual Node 설치 2번 ${NC}
+ ${GREEN} 3. Ritual Node 설치 3번(최종) ${NC}
  ${GREEN} 4. Ritual Node가 멈췄어요! 재시작하기 ${NC}
  ${GREEN} 5. Ritual Node의 지갑주소를 바꾸고 싶어요 ${NC}
  ${GREEN} 6. Ritual Node의 RPC 주소를 바꾸고 싶어요 ${NC}
@@ -224,7 +434,7 @@ case "$num" in
     update_ritual
     ;;
 8)
-    update_ritual
+    uninstall_ritual
     ;;
 *)
     echo -e "${BOLD}${RED}에휴씨발이제욕도하기싫음죽어버려그냥${NC}"
