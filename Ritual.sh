@@ -307,7 +307,7 @@ sed "s|SaysGM saysGm = SaysGM(.*)|SaysGM saysGm = SaysGM($says_gm)|" "$callcontr
 echo -e "${CYAN}project=hello-world make call-contract${NC}"
 project=hello-world make call-contract
 
-echo -e "${BOLD}$M{MAGENTA}리츄얼 설치가 완료됐습니다. 수고하셨습니다. (솔직히 님들이 무슨 수고를 함? 수고는 내가 한 거 아닌가 ㅋㅋ;;)${NC}"
+echo -e "${BOLD}$M{MAGENTA}지갑 주소 변경이 완료됐습니다.${NC}"
 }
 
 change_RPC_Address() {
