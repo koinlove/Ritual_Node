@@ -174,7 +174,7 @@ echo -e "${BOLD}${MAGENTA}도커 구성파일이 수정되었습니다${NC}"
 }
 
 update_ritual() {
-json_file1="$HOME/infernet-container-starter/deploy/config.json"
+json_file1="$HOME/infernet-container-starter/projects/hello-world/container/config.json"
 
 echo -e "${CYAN}${BOLD}sleep, batch_size 수정 완료${NC}"
 sed -i '/"snapshot_sync": {/{
