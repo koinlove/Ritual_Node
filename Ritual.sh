@@ -105,7 +105,7 @@ temp_file=$(mktemp)
 # jq를 사용하여 RPC URL과 Private Key를 수정하고 임시 파일에 저장
 jq --arg rpc "$rpc_url1" --arg priv "$private_key1" \
 	'.chain.rpc_url = $rpc |
-	 .chain.wallet.private_key = $priv
+	 .chain.wallet.private_key = $priv |
 	.containers[0].image = "ritualnetwork/hello-world-infernet:1.2.0"' $json_1 > $temp_file
 
 # temp_file을 원본 파일로 덮어쓰고 임시 파일 삭제
@@ -114,7 +114,7 @@ mv $temp_file $json_1
 # 두 번째 파일에도 같은 변경 사항 적용
 jq --arg rpc "$rpc_url1" --arg priv "$private_key1" \
 	'.chain.rpc_url = $rpc |
-	 .chain.wallet.private_key = $priv
+	 .chain.wallet.private_key = $priv |
 	 .containers[0].image = "ritualnetwork/hello-world-infernet:1.2.0"' $json_2 > $temp_file
 
 mv $temp_file $json_2
@@ -386,7 +386,7 @@ forge clean
 
 # 리츄얼 노드 파일 지우기
 echo -e "${BOLD}${CYAN}Removing infernet-container-starter directory...${NC}"
-sudo rm -rf infernet-container-starter
+sudo rm -rf ~/infernet-container-starter
 
 
 echo -e "${BOLD}${CYAN} Ritual Node와 관련된 파일들이 삭제됐습니다. (혹시 몰라서 도커 명령어는 삭제 안 했습니다.)${NC}"
@@ -394,7 +394,7 @@ echo -e "${BOLD}${RED} 리츄얼 다시 깔겠다고 명령어 다시 실행하�
 echo -e "${BOLD}${YELLOW} 리츄얼 다시 깔려면 콘타보를 아예 리인스톨하고 새로운 상태에서 설치하세요! ${NC}"
 }
 # 메인 메뉴
-echo && echo -e "${BOLD}${MAGENTA}Ritual Node 자동 설치 fd은하똥스크립트${NC} by 비욘세제발죽어
+echo && echo -e "${BOLD}${MAGENTA}Ritual Node 자동 설치 아직하자스크립트${NC} by 비욘세제발죽어
  ${CYAN}원하는 거 고르시고 실행하시고 그러세효. ${NC}
  ———————————————————————
  ${GREEN} 1. 기본파일 설치 및 Ritual Node 설치 1번 ${NC}
