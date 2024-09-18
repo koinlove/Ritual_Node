@@ -136,18 +136,6 @@ rm -f $temp_file
 echo -e "${BOLD}${MAGENTA}RPC URL and Private key have been updated${NC}"
 
 # 수정할 파일 경로
-Deploy_s_sol=~/infernet-container-starter/projects/hello-world/contracts/script/Deploy.s.sol
-
-# 새로운 registry 주소
-old_registry="0x663F3ad617193148711d28f5334eE4Ed07016602"
-new_registry="0x3B1554f346DFe5c482Bb4BA31b880c1C18412170"
-
-# sed 명령어를 사용하여 registry 주소를 수정
-sed "s/$old_registry/$new_registry/" "$deploy_s_sol" | sudo tee "$Deploy_s_sol" > /dev/null
-
-echo -e "${BOLD}${MAGENTA}Deploy.s.sol has been updated${NC}"
-
-# 수정할 파일 경로
 makefile=~/infernet-container-starter/projects/hello-world/contracts/Makefile 
 
 # sed 명령어를 사용하여 sender와 RPC_URL 값을 수정
@@ -156,14 +144,18 @@ sed -i "s/RPC_URL := .*/RPC_URL := $rpc_url1/" $makefile
 
 echo -e "${BOLD}${CYAN}Makefile has been updated${NC}"
 
-deploy_s_sol="$HOME/infernet-container-starter/projects/hello-world/contracts/script/Deploy.s.sol"
+# deploy.s.sol 수정하기
+deploy_s_sol="$~/infernet-container-starter/projects/hello-world/contracts/script/Deploy.s.sol"
 old_registry="0x663F3ad617193148711d28f5334eE4Ed07016602"
 new_registry="0x3B1554f346DFe5c482Bb4BA31b880c1C18412170"
 
 echo -e "${CYAN}deploy.s.sol 수정 완료${NC}"
 sed "s/$old_registry/$new_registry/" "$deploy_s_sol" | sudo tee "$deploy_s_sol" > /dev/null
 
-echo -e "${BOLD}${CYAN}docker-compose.yaml의 이미지 버전이 1.2.0으로 변경됐습니다.${NC}"
+# docker-compose_yaml 설정하기
+docker_yaml=~/infernet-container-starter/deploy/docker-compose.yaml
+sed -i 's/image: ritualnetwork\/infernet-node:1.0.0/image: ritualnetwork\/infernet-node:1.2.0/' "$docker_yaml"
+echo -e "${BOLD}${CYAN}docker-compose.yaml has been updated to 1.2.0${NC}"
 
 echo -e "${CYAN}docker compose down${NC}"
 cd $HOME/infernet-container-starter/deploy
@@ -397,14 +389,14 @@ forge clean
 
 # 리츄얼 노드 파일 지우기
 echo -e "${BOLD}${CYAN}Removing infernet-container-starter directory...${NC}"
-sudo rm -rf ~/infernet-container-starter
+sudo rm -rf infernet-container-starter
 
 
 echo -e "${BOLD}${CYAN} Ritual Node와 관련된 파일들이 삭제됐습니다. 혹시 몰라서 도커 명령어는 삭제 안 했음 ㅎㅎ ${NC}"
 echo -e "${BOLD}${RED} 웬만하면 리츄얼 다시 깔겠다고 리인스톨 안 한 상태에서 명령어 다시 실행하진 마셈! 권장 안 함 ${NC}"
 }
 # 메인 메뉴
-echo && echo -e "${BOLD}${MAGENTA}Ritual Node 자동 설치 아직하자스크립트${NC} by 비욘세제발죽어
+echo && echo -e "${BOLD}${MAGENTA}Ritual Node 자동 설치 Tldldldlldqkf스크립트${NC} by 비욘세제발죽어
  ${CYAN}원하는 거 고르시고 실행하시고 그러세효. ${NC}
  ———————————————————————
  ${GREEN} 1. 기본파일 설치 및 Ritual Node 설치 1번 ${NC}
