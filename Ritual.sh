@@ -33,6 +33,10 @@ fi
 install_ritual() {
 
 # 기본 패키지 설치하기
+command_exists() {
+    command -v "$1" >/dev/null 2>&1
+}
+
 echo -e "${CYAN}sudo apt update${NC}"
 sudo apt update
 
@@ -42,12 +46,15 @@ sudo apt upgrade -y
 echo -e "${CYAN}sudo apt -qy install curl git jq lz4 build-essential screen${NC}"
 sudo apt -qy install curl git jq lz4 build-essential screen
 
-# docker / docker compose 설치하기
-echo -e "${CYAN}curl -fsSL https://get.docker.com -o get-docker.sh${NC}"
-curl -fsSL https://get.docker.com -o get-docker.sh 
-
-echo -e "${CYAN}sudo sh get-docker.sh${NC}"
-sudo sh get-docker.sh
+echo -e "${BOLD}${CYAN}Checking for Docker installation...${NC}"
+if ! command_exists docker; then
+    echo -e "${RED}Docker is not installed. Installing Docker...${NC}"
+    curl -fsSL https://get.docker.com -o get-docker.sh
+    sudo sh get-docker.sh
+    echo -e "${GREEN}Docker installed successfully.${NC}"
+else
+    echo -e "${GREEN}Docker is already installed.${NC}"
+fi
 
 echo -e "${CYAN}docker version${NC}"
 docker version
@@ -55,11 +62,15 @@ docker version
 echo -e "${CYAN}sudo apt-get update${NC}"
 sudo apt-get update
 
-echo -e "${CYAN}sudo curl -L https://github.com/docker/compose/releases/download/$(curl --silent https://api.github.com/repos/docker/compose/releases/latest | jq .name -r)/docker-compose-$(uname -s)-$(uname -m) -o /usr/bin/docker-compose${NC}"
-sudo curl -L https://github.com/docker/compose/releases/download/$(curl --silent https://api.github.com/repos/docker/compose/releases/latest | jq .name -r)/docker-compose-$(uname -s)-$(uname -m) -o /usr/bin/docker-compose
-
-echo -e "${CYAN}sudo chmod 755 /usr/bin/docker-compose${NC}"
-sudo chmod 755 /usr/bin/docker-compose
+if ! command_exists docker-compose; then
+    echo -e "${RED}Docker Compose is not installed. Installing Docker Compose...${NC}"
+    # Docker Compose의 최신 버전 다운로드 URL
+    sudo curl -L https://github.com/docker/compose/releases/download/$(curl --silent https://api.github.com/repos/docker/compose/releases/latest | jq .name -r)/docker-compose-$(uname -s)-$(uname -m) -o /usr/bin/docker-compose
+    sudo chmod 755 /usr/bin/docker-compose
+    echo -e "${GREEN}Docker Compose installed successfully.${NC}"
+else
+    echo -e "${GREEN}Docker Compose is already installed.${NC}"
+fi
 
 echo -e "${CYAN}docker-compose version${NC}"
 docker-compose version
@@ -389,9 +400,8 @@ echo -e "${BOLD}${CYAN}Removing infernet-container-starter directory...${NC}"
 sudo rm -rf ~/infernet-container-starter
 
 
-echo -e "${BOLD}${CYAN} Ritual Node와 관련된 파일들이 삭제됐습니다. (혹시 몰라서 도커 명령어는 삭제 안 했습니다.)${NC}"
-echo -e "${BOLD}${RED} 리츄얼 다시 깔겠다고 명령어 다시 실행하지 마세요! docker 패키지는 삭제 안 해서 설치 명령어 다시 실행했다가 오류날 수도 있음 ${NC}"
-echo -e "${BOLD}${YELLOW} 리츄얼 다시 깔려면 콘타보를 아예 리인스톨하고 새로운 상태에서 설치하세요! ${NC}"
+echo -e "${BOLD}${CYAN} Ritual Node와 관련된 파일들이 삭제됐습니다. 혹시 몰라서 도커 명령어는 삭제 안 했음 ㅎㅎ ${NC}"
+echo -e "${BOLD}${RED} 웬만하면 리츄얼 다시 깔겠다고 리인스톨 안 한 상태에서 명령어 다시 실행하진 마셈! 권장 안 함 ${NC}"
 }
 # 메인 메뉴
 echo && echo -e "${BOLD}${MAGENTA}Ritual Node 자동 설치 아직하자스크립트${NC} by 비욘세제발죽어
