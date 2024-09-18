@@ -373,6 +373,12 @@ uninstall_ritual() {
 
 # docker들 모두 삭제하기
 echo -e "${BOLD}${CYAN}Remove Ritual dockers...${NC}"
+docker stop infernet-anvil
+docker stop infernet-node
+docker stop hello-world
+docker stop deploy-redis-1
+docker stop deploy-fluentbit-1
+
 docker rm -f infernet-anvil
 docker rm -f infernet-node
 docker rm -f hello-world
