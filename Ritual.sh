@@ -79,9 +79,6 @@ docker-compose version
 echo -e "${CYAN}git clone https://github.com/ritual-net/infernet-container-starter${NC}"
 git clone https://github.com/ritual-net/infernet-container-starter
 
-echo -e "${CYAN}cd ~/infernet-container-starter${NC}"
-cd ~/infernet-container-starter
-
 echo -e "${CYAN}config.json 수정 중...${NC}"
 json_1=~/infernet-container-starter/projects/hello-world/container/config.json
 
@@ -92,6 +89,9 @@ jq '.chain.rpc_url = "https://mainnet.base.org/"' $json_1 > temp.json
 mv temp.json $json_1 && rm -f temp.json
 
 echo -e "${CYAN}rpc_url has been updated to https://mainnet.base.org/ in config.json${NC}"
+
+echo -e "${CYAN}cd ~/infernet-container-starter${NC}"
+cd $HOME/infernet-container-starter
 
 echo -e "${MAGENTA}${BOLD}'screen -S ritual', 입력후에 'project=hello-world make deploy-container' 입력${NC}"
 echo -e "${MAGENTA}${BOLD}큰 초록 RITUAL을 보면 컨트롤+A+D로 종료.${NC}"
@@ -168,6 +168,9 @@ docker compose down
 echo -e "${BOLD}${MAGENTA}docker ps${NC}"
 docker ps
 
+echo -e "${CYAN}cd $HOME/infernet-container-starter/deploy${NC}"
+cd $HOME/infernet-container-starter/deploy
+
 echo -e "${BOLD}${MAGENTA}이제 터미널에 'docker compose up'을 입력하세요${NC}"
 echo -e "${BOLD}${MAGENTA}명령어를 입력하고 문구들이 주르륵 나오면 아무런 키도 누르지 말고 터미널을 종료한 뒤, 새로운 터미널을 켜서 다시 콘타보에 로그인하세요${NC}"
 }
@@ -239,6 +242,9 @@ docker compose down
 
 echo -e "${BOLD}${MAGENTA}docker ps${NC}"
 docker ps
+
+echo -e "${CYAN}cd $HOME/infernet-container-starter/deploy${NC}"
+cd $HOME/infernet-container-starter/deploy
 
 echo -e "${BOLD}${MAGENTA}이제 터미널에 'docker compose up'을 입력하세요${NC}"
 echo -e "${BOLD}${MAGENTA}명령어를 입력하고 문구들이 주르륵 나오면 아무런 키도 누르지 말고 터미널을 종료하세요${NC}"
@@ -393,7 +399,9 @@ forge clean
 
 # 리츄얼 노드 파일 지우기
 echo -e "${BOLD}${CYAN}Removing infernet-container-starter directory...${NC}"
+cd $HOME
 sudo rm -rf infernet-container-starter
+cd $HOME
 
 
 echo -e "${BOLD}${CYAN} Ritual Node와 관련된 파일들이 삭제됐습니다. 혹시 몰라서 도커 명령어는 삭제 안 했음 ㅎㅎ 다른 도커가 깔려있을 수도 있으니 ${NC}"
