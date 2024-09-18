@@ -179,12 +179,12 @@ json_file1="$HOME/infernet-container-starter/projects/hello-world/container/conf
 echo -e "${CYAN}${BOLD}sleep, batch_size 수정 완료${NC}"
 sed -i '/"snapshot_sync": {/{
   N;N;
-  s/"sleep": 5,\n    "batch_size": 50/"sleep": 3,\n    "batch_size": 1800,\n    "starting_sub_id": 100000/
+  s/"sleep": 3,\n    "batch_size": 100/"sleep": 3,\n    "batch_size": 1800,\n    "starting_sub_id": 100000/
 }' "$json_file1"
 }
 
 # 메인 메뉴
-echo && echo -e "${BOLD}${MAGENTA}Ritual Node 자동 설치 fd은하스크립트${NC} by 비욘세제발죽어
+echo && echo -e "${BOLD}${MAGENTA}Ritual Node 자동 설치 fd은하똥스크립트${NC} by 비욘세제발죽어
  ${CYAN}원하는 거 고르시고 실행하시고 그러세효. ${NC}
  ———————————————————————
  ${GREEN} 1. 기본파일 설치 및 Ritual Node 설치 ${NC}
