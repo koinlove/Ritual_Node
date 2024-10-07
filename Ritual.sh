@@ -51,9 +51,9 @@ if ! command_exists docker; then
     echo -e "${RED}Docker is not installed. Installing Docker...${NC}"
     curl -fsSL https://get.docker.com -o get-docker.sh
     sudo sh get-docker.sh
-    echo -e "${GREEN}Docker installed successfully.${NC}"
+    echo -e "${CYAN}Docker installed successfully.${NC}"
 else
-    echo -e "${GREEN}Docker is already installed.${NC}"
+    echo -e "${CYAN}Docker is already installed.${NC}"
 fi
 
 echo -e "${CYAN}docker version${NC}"
@@ -67,9 +67,9 @@ if ! command_exists docker-compose; then
     # Docker Compose의 최신 버전 다운로드 URL
     sudo curl -L https://github.com/docker/compose/releases/download/$(curl --silent https://api.github.com/repos/docker/compose/releases/latest | jq .name -r)/docker-compose-$(uname -s)-$(uname -m) -o /usr/bin/docker-compose
     sudo chmod 755 /usr/bin/docker-compose
-    echo -e "${GREEN}Docker Compose installed successfully.${NC}"
+    echo -e "${CYAN}Docker Compose installed successfully.${NC}"
 else
-    echo -e "${GREEN}Docker Compose is already installed.${NC}"
+    echo -e "${CYAN}Docker Compose is already installed.${NC}"
 fi
 
 echo -e "${CYAN}docker-compose version${NC}"
@@ -116,7 +116,7 @@ jq --arg rpc "$rpc_url1" --arg priv "$private_key1" \
      .chain.wallet.private_key = $priv |
      .containers[0].image = "ritualnetwork/hello-world-infernet:1.2.0" |
      .chain.snapshot_sync.sleep = 3 |
-     .chain.snapshot_sync.batch_size = 1800' $json_2 > $temp_file
+     .chain.snapshot_sync.batch_size = 9500' $json_2 > $temp_file
 
 # temp_file을 원본 파일로 덮어쓰고 임시 파일 삭제
 mv $temp_file $json_1
@@ -127,7 +127,7 @@ jq --arg rpc "$rpc_url1" --arg priv "$private_key1" \
      .chain.wallet.private_key = $priv |
      .containers[0].image = "ritualnetwork/hello-world-infernet:1.2.0" |
      .chain.snapshot_sync.sleep = 3 |
-     .chain.snapshot_sync.batch_size = 1800' $json_2 > $temp_file
+     .chain.snapshot_sync.batch_size = 9500' $json_2 > $temp_file
 
 mv $temp_file $json_2
 
@@ -360,7 +360,46 @@ echo -e "${BOLD}${MAGENTA} RPC URK 수정하고도 안 되면 명령어 다시 �
 }
 
 update_ritual() {
-echo -e "${BOLD}${RED}리츄얼 업데이트는 아직 나온 게 없어요 ㅎㅎ 나중에 나오면 안내해 드릴게요~${NC}"
+echo -e "${BOLD}${RED} 리츄얼 업데이트(10/7) batch_size 업데이트 시작합니다.${NC}"
+
+# 수정할 파일 경로
+json_1=~/infernet-container-starter/deploy/config.json
+json_2=~/infernet-container-starter/projects/hello-world/container/config.json
+
+# 임시 파일 생성
+temp_file=$(mktemp)
+
+# jq를 사용하여 RPC URL과 Private Key를 수정하고 임시 파일에 저장
+jq '.chain.snapshot_sync.batch_size = 9500' $json_1 > $temp_file
+
+# temp_file을 원본 파일로 덮어쓰고 임시 파일 삭제
+mv $temp_file $json_1
+
+# 두 번째 파일에도 같은 변경 사항 적용
+jq '.chain.snapshot_sync.batch_size = 9500' $json_2 > $temp_file
+
+mv $temp_file $json_2
+
+# 임시 파일 삭제
+rm -f $temp_file
+
+echo -e  "${CYAN}docker restart infernet-anvil${NC}"
+docker restart infernet-anvil
+
+echo -e  "${CYAN}docker restart hello-world${NC}"
+docker restart hello-world
+
+echo -e  "${CYAN}docker restart infernet-node${NC}"
+docker restart infernet-node
+
+echo -e  "${CYAN}docker restart deploy-fluentbit-1${NC}"
+docker restart deploy-fluentbit-1
+
+echo -e  "${CYAN}docker restart deploy-redis-1${NC}"
+docker restart deploy-redis-1
+
+echo -e "${BOLD}${MAGENTA} 리츄얼 업데이트 완료 ${NC}"
+echo -e "${BOLD}${MAGENTA} 재시작 안 되면 재시작 명령어 4번 입력해서 실행하세요. ${NC}"
 }
 
 uninstall_ritual() {
@@ -416,7 +455,7 @@ echo && echo -e "${BOLD}${MAGENTA}Ritual Node 자동 설치 스크립트${NC} by
  ${GREEN} 4. Ritual Node가 멈췄어요! 재시작하기 ${NC}
  ${GREEN} 5. Ritual Node의 지갑주소를 바꾸고 싶어요 ${NC}
  ${GREEN} 6. Ritual Node의 RPC 주소를 바꾸고 싶어요 ${NC}
- ${GREEN} 7. Ritual Node를 업데이트하고 싶어요(9월 18일자 기준 미지원) ${NC}
+ ${GREEN} 7. Ritual Node를 업데이트하고 싶어요(10월 7일자 업데이트) ${NC}
  ${GREEN} 8. Ritual Node를 내 인생에서 지우고 싶어요 ${NC}
  ———————————————————————" && echo
 
