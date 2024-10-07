@@ -367,13 +367,15 @@ json_2=~/infernet-container-starter/projects/hello-world/container/config.json
 temp_file=$(mktemp)
 
 # jq를 사용하여 RPC URL과 Private Key를 수정하고 임시 파일에 저장
-jq '.chain.snapshot_sync.batch_size = 9500' $json_1 > $temp_file
+jq '.chain.snapshot_sync.batch_size = 9500 |
+    .chain.snapshot_sync.sleep = 3' $json_1 > $temp_file
 
 # temp_file을 원본 파일로 덮어쓰고 임시 파일 삭제
 mv $temp_file $json_1
 
 # 두 번째 파일에도 같은 변경 사항 적용
-jq '.chain.snapshot_sync.batch_size = 9500' $json_2 > $temp_file
+jq '.chain.snapshot_sync.batch_size = 9500 |
+    .chain.snapshot_sync.sleep = 3' $json_2 > $temp_file
 
 mv $temp_file $json_2
 
