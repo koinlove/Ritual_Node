@@ -237,9 +237,6 @@ docker compose down
 echo -e "${BOLD}${MAGENTA}docker ps${NC}"
 docker ps
 
-echo -e "${CYAN}cd $HOME/infernet-container-starter/deploy${NC}"
-cd $HOME/infernet-container-starter/deploy
-
 echo -e "${BOLD}${MAGENTA}이제 터미널에 'cd ~/infernet-container-starter/deploy && docker compose up'을 입력하세요${NC}"
 echo -e "${BOLD}${MAGENTA}명령어를 입력하고 문구들이 주르륵 나오면 아무런 키도 누르지 말고 터미널을 종료하세요${NC}"
 }
