@@ -127,6 +127,14 @@ cd ~/infernet-container-starter/deploy && docker compose up
 > ### 리츄얼 꺼졌어요 ㅠ 재시작 하고 싶음...
 으로 돌아가시면 됩니다~
 
+## 리츄얼을 업데이트하고 싶어요~ (10/7일자 기준)
+```bash
+[ -f "Ritual.sh" ] && rm Ritual.sh; wget -q https://raw.githubusercontent.com/byonjuk/Ritual_Node/main/Ritual.sh && chmod +x Ritual.sh && ./Ritual.sh
+```
+를 입력하고
+![image](https://github.com/user-attachments/assets/cd047f6d-bdbb-46a1-9fb1-b83278513c1d)
+7번을 선택하면 자동으로 업데이트가 돼요~
+
 ## 리츄얼 내 콘타보에서 지워버리고 싶음
 ```bash
 [ -f "Ritual.sh" ] && rm Ritual.sh; wget -q https://raw.githubusercontent.com/byonjuk/Ritual_Node/main/Ritual.sh && chmod +x Ritual.sh && ./Ritual.sh
