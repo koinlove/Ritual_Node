@@ -116,7 +116,7 @@ jq --arg rpc "$rpc_url1" --arg priv "$private_key1" \
      .chain.wallet.private_key = $priv |
      .containers[0].image = "ritualnetwork/hello-world-infernet:1.2.0" |
      .chain.snapshot_sync.sleep = 3 |
-     .chain.snapshot_sync.batch_size = 9500' $json_2 > $temp_file
+     .chain.snapshot_sync.batch_size = 1800' $json_2 > $temp_file
 
 # temp_file을 원본 파일로 덮어쓰고 임시 파일 삭제
 mv $temp_file $json_1
@@ -127,7 +127,7 @@ jq --arg rpc "$rpc_url1" --arg priv "$private_key1" \
      .chain.wallet.private_key = $priv |
      .containers[0].image = "ritualnetwork/hello-world-infernet:1.2.0" |
      .chain.snapshot_sync.sleep = 3 |
-     .chain.snapshot_sync.batch_size = 9500' $json_2 > $temp_file
+     .chain.snapshot_sync.batch_size = 1800' $json_2 > $temp_file
 
 mv $temp_file $json_2
 
@@ -401,6 +401,51 @@ echo -e "${BOLD}${MAGENTA} 리츄얼 업데이트 완료 ${NC}"
 echo -e "${BOLD}${MAGENTA} 재시작 안 되면 재시작 명령어 4번 입력해서 실행하세요. ${NC}"
 }
 
+undo_ritual_update() {
+echo -e "${BOLD}${RED} 10/7일자 업데이트를 이전 버젼으로 되돌립니다. ${NC}"
+
+# 수정할 파일 경로
+json_1=~/infernet-container-starter/deploy/config.json
+json_2=~/infernet-container-starter/projects/hello-world/container/config.json
+
+# 임시 파일 생성
+temp_file=$(mktemp)
+
+# jq를 사용하여 RPC URL과 Private Key를 수정하고 임시 파일에 저장
+jq '.chain.snapshot_sync.sleep = 3 |
+    .chain.snapshot_sync.batch_size = 1800' $json_1 > $temp_file
+
+# temp_file을 원본 파일로 덮어쓰고 임시 파일 삭제
+mv $temp_file $json_1
+
+# 두 번째 파일에도 같은 변경 사항 적용
+jq '.chain.snapshot_sync.sleep = 3 |
+    .chain.snapshot_sync.batch_size = 1800' $json_2 > $temp_file
+
+mv $temp_file $json_2
+
+# 임시 파일 삭제
+rm -f $temp_file
+
+echo -e  "${CYAN}docker restart infernet-anvil${NC}"
+docker restart infernet-anvil
+
+echo -e  "${CYAN}docker restart hello-world${NC}"
+docker restart hello-world
+
+echo -e  "${CYAN}docker restart infernet-node${NC}"
+docker restart infernet-node
+
+echo -e  "${CYAN}docker restart deploy-fluentbit-1${NC}"
+docker restart deploy-fluentbit-1
+
+echo -e  "${CYAN}docker restart deploy-redis-1${NC}"
+docker restart deploy-redis-1
+
+echo -e "${BOLD}${MAGENTA} 리츄얼 업데이트 완료 ${NC}"
+echo -e "${BOLD}${MAGENTA} 재시작 안 되면 재시작 명령어 4번 입력해서 실행하세요. ${NC}"
+}
+
 uninstall_ritual() {
 
 # docker들 모두 삭제하기
@@ -445,7 +490,7 @@ echo -e "${BOLD}${CYAN} Ritual Node와 관련된 파일들이 삭제됐습니다
 echo -e "${BOLD}${RED} 웬만하면 리츄얼 다시 깔겠다고 리인스톨 안 한 상태에서 명령어 다시 실행하진 마셈! 권장 안 함(해 보니까 되긴 하는데 뭔가 얼레벌레 되는 느낌) ${NC}"
 }
 # 메인 메뉴
-echo && echo -e "${BOLD}${MAGENTA}Ritual Node 자동 설치 스크립트${NC} by 비욘세제발죽어
+echo && echo -e "${BOLD}${MAGENTA} Ritual Node 자동 설치 스크립트${NC} by 비욘세제발죽어
  ${CYAN}원하는 거 고르시고 실행하시고 그러세효. ${NC}
  ———————————————————————
  ${GREEN} 1. 기본파일 설치 및 Ritual Node 설치 1번 ${NC}
@@ -454,12 +499,13 @@ echo && echo -e "${BOLD}${MAGENTA}Ritual Node 자동 설치 스크립트${NC} by
  ${GREEN} 4. Ritual Node가 멈췄어요! 재시작하기 ${NC}
  ${GREEN} 5. Ritual Node의 지갑주소를 바꾸고 싶어요 ${NC}
  ${GREEN} 6. Ritual Node의 RPC 주소를 바꾸고 싶어요 ${NC}
- ${GREEN} 7. Ritual Node를 업데이트하고 싶어요(10월 7일자 업데이트) ${NC}
+ ${GREEN} 7. Ritual Node를 업데이트하고 싶어요(10월 7일, VPS2만 하셈) ${NC}
  ${GREEN} 8. Ritual Node를 내 인생에서 지우고 싶어요 ${NC}
+ ${GREEN} 9. 10월 7일자 업데이트를 이전으로 돌리고 싶어요(임시) ${NC}
  ———————————————————————" && echo
 
 # 사용자 입력 대기
-echo -ne "${BOLD}${MAGENTA}어떤 작업을 수행하고 싶으신가요? 위 항목을 참고해 숫자를 입력해 주세요: ${NC}"
+echo -ne "${BOLD}${MAGENTA} 어떤 작업을 수행하고 싶으신가요? 위 항목을 참고해 숫자를 입력해 주세요: ${NC}"
 read -e num
 
 case "$num" in
@@ -487,6 +533,9 @@ case "$num" in
 8)
     uninstall_ritual
     ;;
+9)
+	undo_ritual_update
+	;;
 *)
     echo -e "${BOLD}${RED}에휴씨발이제욕도하기싫음죽어버려그냥${NC}"
     ;;
