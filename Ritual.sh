@@ -79,17 +79,6 @@ docker-compose version
 echo -e "${CYAN}git clone https://github.com/ritual-net/infernet-container-starter${NC}"
 git clone https://github.com/ritual-net/infernet-container-starter
 
-echo -e "${CYAN}config.json 수정 중...${NC}"
-json_1=~/infernet-container-starter/projects/hello-world/container/config.json
-
-# jq를 사용하여 rpc_url 값을 수정하고 임시 파일에 저장
-jq '.chain.rpc_url = "https://mainnet.base.org/"' $json_1 > temp.json
-
-# temp.json을 원본 파일로 덮어쓰고 임시 파일 삭제
-mv temp.json $json_1 && rm -f temp.json
-
-echo -e "${CYAN}rpc_url has been updated to https://mainnet.base.org/ in config.json${NC}"
-
 echo -e "${MAGENTA}${BOLD}'cd ~/infernet-container-starter'를 입력하고, 'screen -S ritual', 입력후에 'project=hello-world make deploy-container' 입력${NC}"
 echo -e "${MAGENTA}${BOLD}큰 초록 RITUAL을 보면 컨트롤+A+D로 종료.${NC}"
 }
@@ -487,8 +476,8 @@ sudo rm -rf infernet-container-starter
 cd $HOME
 
 echo -e "${BOLD}${CYAN} Ritual Node와 관련된 파일들이 삭제됐습니다. 혹시 몰라서 도커 명령어는 삭제 안 했음 ㅎㅎ 다른 도커가 깔려있을 수도 있으니 ${NC}"
-echo -e "${BOLD}${RED} 웬만하면 리츄얼 다시 깔겠다고 리인스톨 안 한 상태에서 명령어 다시 실행하진 마셈! 권장 안 함(해 보니까 되긴 하는데 뭔가 얼레벌레 되는 느낌) ${NC}"
 }
+
 # 메인 메뉴
 echo && echo -e "${BOLD}${MAGENTA} Ritual Node 자동 설치 스크립트${NC} by 비욘세제발죽어
  ${CYAN}원하는 거 고르시고 실행하시고 그러세효. ${NC}
