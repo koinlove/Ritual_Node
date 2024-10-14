@@ -49,8 +49,7 @@ sudo apt -qy install curl git jq lz4 build-essential screen
 echo -e "${BOLD}${CYAN}Checking for Docker installation...${NC}"
 if ! command_exists docker; then
     echo -e "${RED}Docker is not installed. Installing Docker...${NC}"
-    curl -fsSL https://get.docker.com -o get-docker.sh
-    sudo sh get-docker.sh
+    sudo apt install docker.io
     echo -e "${CYAN}Docker installed successfully.${NC}"
 else
     echo -e "${CYAN}Docker is already installed.${NC}"
@@ -71,6 +70,14 @@ if ! command_exists docker-compose; then
 else
     echo -e "${CYAN}Docker Compose is already installed.${NC}"
 fi
+
+echo -e "${CYAN}install docker compose CLI plugin${NC}"
+DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
+mkdir -p $DOCKER_CONFIG/cli-plugins
+curl -SL https://github.com/docker/compose/releases/download/v2.20.2/docker-compose-linux-x86_64 -o $DOCKER_CONFIG/cli-plugins/docker-compose
+
+echo -e "${CYAN}make plugin executable${NC}"
+chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
 
 echo -e "${CYAN}docker-compose version${NC}"
 docker-compose version
@@ -103,9 +110,11 @@ temp_file=$(mktemp)
 jq --arg rpc "$rpc_url1" --arg priv "$private_key1" \
     '.chain.rpc_url = $rpc |
      .chain.wallet.private_key = $priv |
+	 .chain.registry_address = "0x3B1554f346DFe5c482Bb4BA31b880c1C18412170" |
      .containers[0].image = "ritualnetwork/hello-world-infernet:1.2.0" |
-     .chain.snapshot_sync.sleep = 3 |
-     .chain.snapshot_sync.batch_size = 1800' $json_2 > $temp_file
+     .chain.snapshot_sync.sleep = 5 |
+     .chain.snapshot_sync.batch_size = 1800 |
+	 .chain.snapshot_sync.starting_sub_id = 100000' $json_1 > $temp_file
 
 # temp_file을 원본 파일로 덮어쓰고 임시 파일 삭제
 mv $temp_file $json_1
@@ -114,9 +123,11 @@ mv $temp_file $json_1
 jq --arg rpc "$rpc_url1" --arg priv "$private_key1" \
     '.chain.rpc_url = $rpc |
      .chain.wallet.private_key = $priv |
+	 .chain.registry_address = "0x3B1554f346DFe5c482Bb4BA31b880c1C18412170" |
      .containers[0].image = "ritualnetwork/hello-world-infernet:1.2.0" |
-     .chain.snapshot_sync.sleep = 3 |
-     .chain.snapshot_sync.batch_size = 1800' $json_2 > $temp_file
+     .chain.snapshot_sync.sleep = 5 |
+     .chain.snapshot_sync.batch_size = 1800 |
+	 .chain.snapshot_sync.starting_sub_id = 100000' $json_2 > $temp_file
 
 mv $temp_file $json_2
 
@@ -484,7 +495,7 @@ echo && echo -e "${BOLD}${MAGENTA} Ritual Node 자동 설치 스크립트${NC} b
  ${CYAN}원하는 거 고르시고 실행하시고 그러세효. ${NC}
  ———————————————————————
  ${GREEN} 1. 기본파일 설치 및 Ritual Node 설치 1번 ${NC}
- ${GREEN} 2. Ritual Node 설치 2번 ${NC}
+ ${GREEN} 2. Ritual Node 설치 2번(업뎃) ${NC}
  ${GREEN} 3. Ritual Node 설치 3번(최종) ${NC}
  ${GREEN} 4. Ritual Node가 멈췄어요! 재시작하기 ${NC}
  ${GREEN} 5. Ritual Node의 지갑주소를 바꾸고 싶어요 ${NC}
