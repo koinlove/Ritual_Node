@@ -86,7 +86,7 @@ docker-compose version
 echo -e "${CYAN}git clone https://github.com/ritual-net/infernet-container-starter${NC}"
 git clone https://github.com/ritual-net/infernet-container-starter
 
-echo -e "${MAGENTA}${BOLD}'cd ~/infernet-container-starter'를 입력하고, 'screen -S ritual', 입력후에 'project=hello-world make deploy-container' 입력${NC}"
+echo -e "${MAGENTA}${BOLD}'screen -S ritual'입력 후 'cd ~/infernet-container-starter && project=hello-world make deploy-container' 입력${NC}"
 echo -e "${MAGENTA}${BOLD}큰 초록 RITUAL을 보면 컨트롤+A+D로 종료.${NC}"
 }
 
@@ -161,6 +161,9 @@ echo -e "${BOLD}${CYAN}docker-compose.yaml has been updated to 1.2.0${NC}"
 echo -e "${CYAN}docker compose down${NC}"
 cd $HOME/infernet-container-starter/deploy
 docker compose down
+
+echo -e "${CYAN}docker restart hello-world${NC}"
+docker restart hello-world
 
 echo -e "${BOLD}${MAGENTA}docker ps${NC}"
 docker ps
