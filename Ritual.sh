@@ -390,6 +390,50 @@ echo -e "${BOLD}${MAGENTA} 리츄얼 업데이트 완료 ${NC}"
 echo -e "${BOLD}${MAGENTA} 재시작 안 되면 재시작 명령어 4번 입력해서 실행하세요. ${NC}"
 }
 
+uninstall_ritual() {
+
+# docker들 모두 삭제하기
+echo -e "${BOLD}${CYAN}Remove Ritual dockers...${NC}"
+docker stop infernet-anvil
+docker stop infernet-node
+docker stop hello-world
+docker stop deploy-redis-1
+docker stop deploy-fluentbit-1
+
+docker rm -f infernet-anvil
+docker rm -f infernet-node
+docker rm -f hello-world
+docker rm -f deploy-redis-1
+docker rm -f deploy-fluentbit-1
+
+echo -e "${BOLD}${CYAN}Removing ritual docker images...${NC}"
+docker image ls -a | grep "infernet" | awk '{print $3}' | xargs docker rmi -f
+docker image ls -a | grep "infernet" | awk '{print $3}' | xargs docker rmi -f
+docker image ls -a | grep "fluent-bit" | awk '{print $3}' | xargs docker rmi -f
+docker image ls -a | grep "redis" | awk '{print $3}' | xargs docker rmi -f
+
+# foundry 파일 삭제하기
+echo -e "${CYAN}rm -rf $HOME/foundry${NC}"
+rm -rf $HOME/foundry
+
+echo -e "${CYAN}sed -i '/\/root\/.foundry\/bin/d' ~/.bashrc${NC}"
+sed -i '/\/root\/.foundry\/bin/d' ~/.bashrc
+
+echo -e "${CYAN}rm -rf ~/infernet-container-starter/projects/hello-world/contracts/lib${NC}"
+rm -rf ~/infernet-container-starter/projects/hello-world/contracts/lib
+
+echo -e "${CYAN}forge clean${NC}"
+forge clean
+
+# 리츄얼 노드 파일 지우기
+echo -e "${BOLD}${CYAN}Removing infernet-container-starter directory...${NC}"
+cd $HOME
+sudo rm -rf infernet-container-starter
+cd $HOME
+
+echo -e "${BOLD}${CYAN} Ritual Node와 관련된 파일들이 삭제됐습니다. 혹시 몰라서 도커 명령어는 삭제 안 했음 ㅎㅎ 다른 도커가 깔려있을 수도 있으니 ${NC}"
+}
+
 undo_ritual_update() {
 echo -e "${BOLD}${RED} 10/7일자 업데이트를 이전 버젼으로 되돌립니다. ${NC}"
 
@@ -433,49 +477,6 @@ docker restart deploy-redis-1
 
 echo -e "${BOLD}${MAGENTA} 리츄얼 업데이트 완료 ${NC}"
 echo -e "${BOLD}${MAGENTA} 재시작 안 되면 재시작 명령어 4번 입력해서 실행하세요. ${NC}"
-}
-
-uninstall_ritual() {
-
-# docker들 모두 삭제하기
-echo -e "${BOLD}${CYAN}Remove Ritual dockers...${NC}"
-docker stop infernet-anvil
-docker stop infernet-node
-docker stop hello-world
-docker stop deploy-redis-1
-docker stop deploy-fluentbit-1
-
-docker rm -f infernet-anvil
-docker rm -f infernet-node
-docker rm -f hello-world
-docker rm -f deploy-redis-1
-docker rm -f deploy-fluentbit-1
-
-echo -e "${BOLD}${CYAN}Removing ritual docker images...${NC}"
-docker image ls -a | grep "infernet" | awk '{print $3}' | xargs docker rmi -f
-docker image ls -a | grep "infernet" | awk '{print $3}' | xargs docker rmi -f
-docker image ls -a | grep "fluent-bit" | awk '{print $3}' | xargs docker rmi -f
-
-# foundry 파일 삭제하기
-echo -e "${CYAN}rm -rf $HOME/foundry${NC}"
-rm -rf $HOME/foundry
-
-echo -e "${CYAN}sed -i '/\/root\/.foundry\/bin/d' ~/.bashrc${NC}"
-sed -i '/\/root\/.foundry\/bin/d' ~/.bashrc
-
-echo -e "${CYAN}rm -rf ~/infernet-container-starter/projects/hello-world/contracts/lib${NC}"
-rm -rf ~/infernet-container-starter/projects/hello-world/contracts/lib
-
-echo -e "${CYAN}forge clean${NC}"
-forge clean
-
-# 리츄얼 노드 파일 지우기
-echo -e "${BOLD}${CYAN}Removing infernet-container-starter directory...${NC}"
-cd $HOME
-sudo rm -rf infernet-container-starter
-cd $HOME
-
-echo -e "${BOLD}${CYAN} Ritual Node와 관련된 파일들이 삭제됐습니다. 혹시 몰라서 도커 명령어는 삭제 안 했음 ㅎㅎ 다른 도커가 깔려있을 수도 있으니 ${NC}"
 }
 
 # 메인 메뉴
