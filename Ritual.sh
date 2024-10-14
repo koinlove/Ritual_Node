@@ -442,7 +442,7 @@ cd $HOME
 sudo rm -rf infernet-container-starter
 cd $HOME
 
-echo -e "${BOLD}${CYAN} Ritual Node와 관련된 파일들이 삭제됐습니다. 혹시 몰라서 도커 명령어는 삭제 안 했음 ㅎㅎ 다른 도커가 깔려있을 수도 있으니 ${NC}"
+echo -e "${BOLD}${CYAN}Ritual Node와 관련된 파일들이 삭제됐습니다. 혹시 몰라서 도커 명령어는 삭제 안 했음 ㅎㅎ 다른 도커가 깔려있을 수도 있으니 ${NC}"
 }
 
 undo_ritual_update() {
