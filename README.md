@@ -1,6 +1,5 @@
 # Ritual Node 설치하기
 
-> ## 현재 리츄얼 노드에 에러가 있습니다! 돌리지 마세요 (ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ)
 ## Ritual Node 설치하는 방법
 ```bash
 [ -f "Ritual.sh" ] && rm Ritual.sh; wget -q https://raw.githubusercontent.com/byonjuk/Ritual_Node/main/Ritual.sh && chmod +x Ritual.sh && ./Ritual.sh
