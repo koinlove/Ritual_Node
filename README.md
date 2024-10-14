@@ -18,15 +18,11 @@
 
 그 이후에
 ```bash
-cd ~/infernet-container-starter
-```
-를 입력하고
-```bash
 screen -S ritual
 ```
-을 입력한 뒤에 아무 것도 없는 검은 화면이 뜨면
+을 입력해서 아무 것도 없는 검은 화면이 뜨면
 ```bash
-project=hello-world make deploy-container
+cd ~/infernet-container-starter && project=hello-world make deploy-container
 ```
 를 입력해서 컨테이너 계약까지 끝마치기!
 
