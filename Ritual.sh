@@ -52,7 +52,7 @@ sudo apt -qy install curl git jq lz4 build-essential screen
 echo -e "${BOLD}${CYAN}Checking for Docker installation...${NC}"
 if ! command_exists docker; then
     echo -e "${RED}Docker is not installed. Installing Docker...${NC}"
-    sudo apt install docker.io
+    sudo apt install docker.io -y
     echo -e "${CYAN}Docker installed successfully.${NC}"
 else
     echo -e "${CYAN}Docker is already installed.${NC}"
