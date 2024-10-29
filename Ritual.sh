@@ -155,12 +155,12 @@ sed -i "s|RPC_URL := .*|RPC_URL := $rpc_url1|" "$makefile"
 echo -e "${BOLD}${CYAN}Makefile has been updated${NC}"
 
 # deploy.s.sol 수정하기
-deploy_s_sol=~/infernet-container-starter/projects/hello-world/contracts/script/Deploy.s.sol
+deploy_s_sol=~/infernet-container-starter/projects/hello-world/contracts/script/Deploy.s.sol  #지금 여기에 문제있음
 old_registry="0x663F3ad617193148711d28f5334eE4Ed07016602"
 new_registry="0x3B1554f346DFe5c482Bb4BA31b880c1C18412170"
 
 echo -e "${CYAN}deploy.s.sol 수정 완료${NC}"
-sed "s/$old_registry/$new_registry/" "$deploy_s_sol" | sudo tee "$deploy_s_sol" > /dev/null
+sed -i "s|$old_registry|$new_registry|" "$deploy_s_sol"
 
 # docker-compose_yaml 설정하기
 docker_yaml=~/infernet-container-starter/deploy/docker-compose.yaml
@@ -468,7 +468,7 @@ echo && echo -e "${BOLD}${MAGENTA} Ritual Node 자동 설치 스크립트${NC} b
  ${CYAN}원하는 거 고르시고 실행하시고 그러세효. ${NC}
  ———————————————————————
  ${GREEN} 1. 기본파일 설치 및 Ritual Node 설치 1번(v1.4.0) ${NC}
- ${GREEN} 2. Ritual Node 설치 2번(v1.4.0) ${NC}
+ ${GREEN} 2. Ritual Node 설치 2번(v1.4.0)제발요 ${NC}
  ${GREEN} 3. Ritual Node 설치 3번(v1.4.0) ${NC}
  ${GREEN} 4. Ritual Node가 멈췄어요! 재시작하기 ${NC}
  ${GREEN} 5. Ritual Node의 지갑주소를 바꾸고 싶어요 ${NC}
