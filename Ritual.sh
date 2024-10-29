@@ -117,7 +117,7 @@ temp_file=$(mktemp)
 jq --arg rpc "$rpc_url1" --arg priv "$private_key1" \
     '.chain.rpc_url = $rpc |
      .chain.wallet.private_key = $priv |
-	 .chain.trail_head_blocks = 3
+	 .chain.trail_head_blocks = 3 |
 	 .chain.registry_address = "0x3B1554f346DFe5c482Bb4BA31b880c1C18412170" |
      .containers[0].image = "ritualnetwork/hello-world-infernet:1.2.0" |
      .chain.snapshot_sync.sleep = 3 |
@@ -132,7 +132,7 @@ mv $temp_file $json_1
 jq --arg rpc "$rpc_url1" --arg priv "$private_key1" \
     '.chain.rpc_url = $rpc |
      .chain.wallet.private_key = $priv |
-	 .chain.trail_head_blocks = 3
+	 .chain.trail_head_blocks = 3 |
 	 .chain.registry_address = "0x3B1554f346DFe5c482Bb4BA31b880c1C18412170" |
      .containers[0].image = "ritualnetwork/hello-world-infernet:1.2.0" |
      .chain.snapshot_sync.sleep = 3 |
@@ -469,9 +469,9 @@ echo -e "${BOLD}${CYAN}Ritual Node와 관련된 파일들이 삭제됐습니다.
 echo && echo -e "${BOLD}${MAGENTA} Ritual Node 자동 설치 스크립트${NC} by 비욘세제발죽어
  ${CYAN}원하는 거 고르시고 실행하시고 그러세효. ${NC}
  ———————————————————————
- ${GREEN} 1. 기본파일 설치 및 Ritual Node 설치 1번(새로운) ${NC}
- ${GREEN} 2. Ritual Node 설치 2번(업뎃) ${NC}
- ${GREEN} 3. Ritual Node 설치 3번(최종) ${NC}
+ ${GREEN} 1. 기본파일 설치 및 Ritual Node 설치 1번(1.4.0) ${NC}
+ ${GREEN} 2. Ritual Node 설치 2번(1.4.0) ${NC}
+ ${GREEN} 3. Ritual Node 설치 3번(1.4.0) ${NC}
  ${GREEN} 4. Ritual Node가 멈췄어요! 재시작하기 ${NC}
  ${GREEN} 5. Ritual Node의 지갑주소를 바꾸고 싶어요 ${NC}
  ${GREEN} 6. Ritual Node의 RPC 주소를 바꾸고 싶어요 ${NC}
