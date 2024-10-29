@@ -43,6 +43,9 @@ sudo apt update
 echo -e "${CYAN}sudo apt upgrade -y${NC}"
 sudo apt upgrade -y
 
+echo -e "${CYAN}sudo apt autoremove -y${NC}"
+sudo apt autoremove -y
+
 echo -e "${CYAN}sudo apt -qy install curl git jq lz4 build-essential screen${NC}"
 sudo apt -qy install curl git jq lz4 build-essential screen
 
@@ -110,11 +113,13 @@ temp_file=$(mktemp)
 jq --arg rpc "$rpc_url1" --arg priv "$private_key1" \
     '.chain.rpc_url = $rpc |
      .chain.wallet.private_key = $priv |
+	 .chain.trail_head_blocks = 3
 	 .chain.registry_address = "0x3B1554f346DFe5c482Bb4BA31b880c1C18412170" |
      .containers[0].image = "ritualnetwork/hello-world-infernet:1.2.0" |
-     .chain.snapshot_sync.sleep = 5 |
-     .chain.snapshot_sync.batch_size = 1800 |
-	 .chain.snapshot_sync.starting_sub_id = 100000' $json_1 > $temp_file
+     .chain.snapshot_sync.sleep = 3 |
+     .chain.snapshot_sync.batch_size = 800 |
+	 .chain.snapshot_sync.starting_sub_id = 160000 |
+	 .chain.snapshot_sync.sync_period = 30' $json_1 > $temp_file
 
 # temp_file을 원본 파일로 덮어쓰고 임시 파일 삭제
 mv $temp_file $json_1
@@ -123,11 +128,13 @@ mv $temp_file $json_1
 jq --arg rpc "$rpc_url1" --arg priv "$private_key1" \
     '.chain.rpc_url = $rpc |
      .chain.wallet.private_key = $priv |
+	 .chain.trail_head_blocks = 3
 	 .chain.registry_address = "0x3B1554f346DFe5c482Bb4BA31b880c1C18412170" |
      .containers[0].image = "ritualnetwork/hello-world-infernet:1.2.0" |
-     .chain.snapshot_sync.sleep = 5 |
-     .chain.snapshot_sync.batch_size = 1800 |
-	 .chain.snapshot_sync.starting_sub_id = 100000' $json_2 > $temp_file
+     .chain.snapshot_sync.sleep = 3 |
+     .chain.snapshot_sync.batch_size = 800 |
+	 .chain.snapshot_sync.starting_sub_id = 160000 |
+	 .chain.snapshot_sync.sync_period = 30' $json_2 > $temp_file
 
 mv $temp_file $json_2
 
@@ -155,7 +162,7 @@ sed "s/$old_registry/$new_registry/" "$deploy_s_sol" | sudo tee "$deploy_s_sol" 
 
 # docker-compose_yaml 설정하기
 docker_yaml=~/infernet-container-starter/deploy/docker-compose.yaml
-sed -i 's/image: ritualnetwork\/infernet-node:1.0.0/image: ritualnetwork\/infernet-node:1.2.0/' "$docker_yaml"
+sed -i 's/image: ritualnetwork\/infernet-node:1.0.0/image: ritualnetwork\/infernet-node:1.4.0/' "$docker_yaml"
 echo -e "${BOLD}${CYAN}docker-compose.yaml has been updated to 1.2.0${NC}"
 
 echo -e "${CYAN}docker compose down${NC}"
@@ -387,23 +394,24 @@ mv $temp_file $json_2
 # 임시 파일 삭제
 rm -f $temp_file
 
-echo -e  "${CYAN}docker restart infernet-anvil${NC}"
-docker restart infernet-anvil
+# docker-compose_yaml 설정하기
+docker_yaml=~/infernet-container-starter/deploy/docker-compose.yaml
+sed -i 's/image: ritualnetwork\/infernet-node:1.0.0/image: ritualnetwork\/infernet-node:1.4.0/' "$docker_yaml"
+echo -e "${BOLD}${CYAN}docker-compose.yaml has been updated to 1.2.0${NC}"
 
-echo -e  "${CYAN}docker restart hello-world${NC}"
-docker restart hello-world
+echo -e "${CYAN}cd ~/infernet-container-starter/deploy && docker compose down${NC}"
+cd ~/infernet-container-starter/deploy && docker compose down
 
-echo -e  "${CYAN}docker restart infernet-node${NC}"
-docker restart infernet-node
+echo -e "${YELLOW}지금부터 자동으로 리츄얼이 실행될 겁니다.${NC}"
+sleep 2
 
-echo -e  "${CYAN}docker restart deploy-fluentbit-1${NC}"
-docker restart deploy-fluentbit-1
+echo -e "${YELLOW}5초 뒤에 시작될 건데, 도커의 로그들이 올라오면 깃헙에 나온대로 잘 꺼주세요.${NC}${BOLD}${RED}CTRL + Z 절대 ㄴㄴㄴㄴㄴ${NC}"
+sleep 5
 
-echo -e  "${CYAN}docker restart deploy-redis-1${NC}"
-docker restart deploy-redis-1
+echo -e "${YELLOW}도커를 재시작합니다.${NC}"
+sleep 2
 
-echo -e "${BOLD}${MAGENTA} 리츄얼 업데이트 완료 ${NC}"
-echo -e "${BOLD}${MAGENTA} 재시작 안 되면 재시작 명령어 4번 입력해서 실행하세요. ${NC}"
+cd ~/infernet-container-starter/deploy && docker compose down
 }
 
 uninstall_ritual() {
@@ -421,6 +429,8 @@ docker rm -f infernet-node
 docker rm -f hello-world
 docker rm -f deploy-redis-1
 docker rm -f deploy-fluentbit-1
+
+cd ~/infernet-container-starter/deploy && docker compose down
 
 echo -e "${BOLD}${CYAN}Removing ritual docker images...${NC}"
 docker image ls -a | grep "infernet" | awk '{print $3}' | xargs docker rmi -f
@@ -461,7 +471,7 @@ echo && echo -e "${BOLD}${MAGENTA} Ritual Node 자동 설치 스크립트${NC} b
  ${GREEN} 4. Ritual Node가 멈췄어요! 재시작하기 ${NC}
  ${GREEN} 5. Ritual Node의 지갑주소를 바꾸고 싶어요 ${NC}
  ${GREEN} 6. Ritual Node의 RPC 주소를 바꾸고 싶어요 ${NC}
- ${GREEN} 7. Ritual Node를 업데이트하고 싶어요(10월 24일) ${NC}
+ ${GREEN} 7. Ritual Node를 업데이트하고 싶어요${NC}${RED}(지우고 다시 까세요) ${NC}
  ${GREEN} 8. Ritual Node를 내 인생에서 지우고 싶어요 ${NC}
  ———————————————————————" && echo
 
