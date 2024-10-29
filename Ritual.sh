@@ -91,7 +91,7 @@ git clone https://github.com/ritual-net/infernet-container-starter
 
 docker_yaml=~/infernet-container-starter/deploy/docker-compose.yaml
 sed -i 's/image: ritualnetwork\/infernet-node:1.3.1/image: ritualnetwork\/infernet-node:1.2.0/' "$docker_yaml"
-echo -e "${BOLD}${CYAN}docker-compose.yaml(the docker version) has been reverted to 1.0.0${NC}"
+echo -e "${BOLD}${CYAN}docker-compose.yaml(the docker version) has been reverted to 1.2.0${NC}"
 
 echo -e "${MAGENTA}${BOLD}'screen -S ritual'입력 후 'cd ~/infernet-container-starter && project=hello-world make deploy-container' 입력${NC}"
 echo -e "${MAGENTA}${BOLD}큰 초록 RITUAL을 보면 컨트롤+A+D로 종료.${NC}"
@@ -469,7 +469,7 @@ echo -e "${BOLD}${CYAN}Ritual Node와 관련된 파일들이 삭제됐습니다.
 echo && echo -e "${BOLD}${MAGENTA} Ritual Node 자동 설치 스크립트${NC} by 비욘세제발죽어
  ${CYAN}원하는 거 고르시고 실행하시고 그러세효. ${NC}
  ———————————————————————
- ${GREEN} 1. 기본파일 설치 및 Ritual Node 설치 1번 ${NC}
+ ${GREEN} 1. 기본파일 설치 및 Ritual Node 설치 1번(새로운) ${NC}
  ${GREEN} 2. Ritual Node 설치 2번(업뎃) ${NC}
  ${GREEN} 3. Ritual Node 설치 3번(최종) ${NC}
  ${GREEN} 4. Ritual Node가 멈췄어요! 재시작하기 ${NC}
