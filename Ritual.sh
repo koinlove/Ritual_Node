@@ -89,6 +89,10 @@ docker-compose version
 echo -e "${CYAN}git clone https://github.com/ritual-net/infernet-container-starter${NC}"
 git clone https://github.com/ritual-net/infernet-container-starter
 
+docker_yaml=~/infernet-container-starter/deploy/docker-compose.yaml
+sed -i 's/image: ritualnetwork\/infernet-node:1.3.1/image: ritualnetwork\/infernet-node:1.2.0/' "$docker_yaml"
+echo -e "${BOLD}${CYAN}docker-compose.yaml(the docker version) has been reverted to 1.0.0${NC}"
+
 echo -e "${MAGENTA}${BOLD}'screen -S ritual'입력 후 'cd ~/infernet-container-starter && project=hello-world make deploy-container' 입력${NC}"
 echo -e "${MAGENTA}${BOLD}큰 초록 RITUAL을 보면 컨트롤+A+D로 종료.${NC}"
 }
@@ -162,8 +166,8 @@ sed "s/$old_registry/$new_registry/" "$deploy_s_sol" | sudo tee "$deploy_s_sol" 
 
 # docker-compose_yaml 설정하기
 docker_yaml=~/infernet-container-starter/deploy/docker-compose.yaml
-sed -i 's/image: ritualnetwork\/infernet-node:1.0.0/image: ritualnetwork\/infernet-node:1.4.0/' "$docker_yaml"
-echo -e "${BOLD}${CYAN}docker-compose.yaml has been updated to 1.2.0${NC}"
+sed -i 's/image: ritualnetwork\/infernet-node:1.2.0/image: ritualnetwork\/infernet-node:1.4.0/' "$docker_yaml"
+echo -e "${BOLD}${CYAN}docker-compose.yaml has been updated to 1.4.0${NC}"
 
 echo -e "${CYAN}docker compose down${NC}"
 cd $HOME/infernet-container-starter/deploy
