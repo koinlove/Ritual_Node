@@ -1,4 +1,5 @@
-# Ritual Node 설치하기
+# Ritual Node 설치하기(1.4.0)
+하기 전에 ㅋ 이미 깔려있는 거(1.2.0)은 삭제하고 다시 해주세용 ㅋㅋ~
 
 ## Ritual Node 설치하는 방법
 ```bash
