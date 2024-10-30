@@ -381,12 +381,14 @@ temp_file=$(mktemp)
 # 첫 번째 파일 수정
 jq '.chain.snapshot_sync.sleep = 3 |
     .chain.snapshot_sync.batch_size = 9500 |
+	.chain.snapshot_sync.starting_sub_id = 170000 |
 	.chain.snapshot_sync.sync_period = 5' "$json_1" > "$temp_file"
 mv "$temp_file" "$json_1"
 
 # 두 번째 파일 수정
 jq '.chain.snapshot_sync.sleep = 3 |
     .chain.snapshot_sync.batch_size = 9500 |
+	.chain.snapshot_sync.starting_sub_id = 170000 |
 	.chain.snapshot_sync.sync_period = 5' "$json_2" > "$temp_file"
 mv "$temp_file" "$json_2"
 
@@ -395,6 +397,8 @@ rm -f $temp_file
 
 echo -e "${YELLOW}도커를 내립니다.${NC}"
 cd ~/infernet-container-starter/deploy && docker compose down
+
+echo -e "${YELLOW}이제 ${NC}${RED}'cd ~/infernet-container-starter/deploy && docker compose up'${NC}${YELLOW}를 입력해서 도커를 재실행해 주세요.${NC}"
 }
 
 uninstall_ritual() {
