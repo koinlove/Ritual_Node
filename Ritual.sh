@@ -371,6 +371,9 @@ echo -e "${BOLD}${MAGENTA} RPC URK 수정하고도 안 되면 명령어 다시 �
 update_ritual() {
 echo -e "${BOLD}${RED} 리츄얼 업데이트(10/7) batch_size 업데이트 시작합니다.${NC}"
 
+echo -ne "${BOLD}${MAGENTA}새로운 batch_size를 입력하세요: ${NC}"
+read -e new_batch
+
 # 수정할 파일 경로
 json_1=~/infernet-container-starter/deploy/config.json
 json_2=~/infernet-container-starter/projects/hello-world/container/config.json
@@ -378,41 +381,22 @@ json_2=~/infernet-container-starter/projects/hello-world/container/config.json
 # 임시 파일 생성
 temp_file=$(mktemp)
 
-# jq를 사용하여 RPC URL과 Private Key를 수정하고 임시 파일에 저장
-jq '.chain.snapshot_sync.sleep = 3 |
-    .chain.snapshot_sync.batch_size = 1800 |
-	.chain.snapshot_sync.starting_sub_id = 100000' $json_1 > $temp_file
+# 첫 번째 파일 수정
+jq --argjson batch "$new_batch" \
+    '.chain.snapshot_sync.sleep = 3 |
+     .chain.snapshot_sync.batch_size = $batch' "$json_1" > "$temp_file"
+mv "$temp_file" "$json_1"
 
-# temp_file을 원본 파일로 덮어쓰고 임시 파일 삭제
-mv $temp_file $json_1
-
-# 두 번째 파일에도 같은 변경 사항 적용
-jq '.chain.snapshot_sync.sleep = 3 |
-    .chain.snapshot_sync.batch_size = 1800 |
-	.chain.snapshot_sync.starting_sub_id = 100000' $json_2 > $temp_file
-
-mv $temp_file $json_2
+# 두 번째 파일 수정
+jq --argjson batch "$new_batch" \
+    '.chain.snapshot_sync.sleep = 3 |
+     .chain.snapshot_sync.batch_size = $batch' "$json_2" > "$temp_file"
+mv "$temp_file" "$json_2"
 
 # 임시 파일 삭제
 rm -f $temp_file
 
-# docker-compose_yaml 설정하기
-docker_yaml=~/infernet-container-starter/deploy/docker-compose.yaml
-sed -i 's/image: ritualnetwork\/infernet-node:1.0.0/image: ritualnetwork\/infernet-node:1.4.0/' "$docker_yaml"
-echo -e "${BOLD}${CYAN}docker-compose.yaml has been updated to 1.2.0${NC}"
-
-echo -e "${CYAN}cd ~/infernet-container-starter/deploy && docker compose down${NC}"
-cd ~/infernet-container-starter/deploy && docker compose down
-
-echo -e "${YELLOW}지금부터 자동으로 리츄얼이 실행될 겁니다.${NC}"
-sleep 2
-
-echo -e "${YELLOW}5초 뒤에 시작될 건데, 도커의 로그들이 올라오면 깃헙에 나온대로 잘 꺼주세요.${NC}${BOLD}${RED}CTRL + Z 절대 ㄴㄴㄴㄴㄴ${NC}"
-sleep 5
-
-echo -e "${YELLOW}도커를 재시작합니다.${NC}"
-sleep 2
-
+echo -e "${YELLOW}도커를 내립니다.${NC}"
 cd ~/infernet-container-starter/deploy && docker compose down
 }
 
@@ -473,7 +457,7 @@ echo && echo -e "${BOLD}${MAGENTA} Ritual Node 자동 설치 스크립트${NC} b
  ${GREEN} 4. Ritual Node가 멈췄어요! 재시작하기 ${NC}
  ${GREEN} 5. Ritual Node의 지갑주소를 바꾸고 싶어요 ${NC}
  ${GREEN} 6. Ritual Node의 RPC 주소를 바꾸고 싶어요 ${NC}
- ${GREEN} 7. Ritual Node를 업데이트하고 싶어요${NC}${RED}(지우고 다시 까세요) ${NC}
+ ${GREEN} 7. Ritual Node의 batch size를 바꾸고 싶어요 ${NC}
  ${GREEN} 8. Ritual Node를 내 인생에서 지우고 싶어요 ${NC}
  ———————————————————————" && echo
 
@@ -501,7 +485,7 @@ case "$num" in
     change_RPC_Address
     ;;
 7)
-    update_ritual
+    change_batch
     ;;
 8)
     uninstall_ritual
