@@ -368,11 +368,8 @@ echo -e "${BOLD}${MAGENTA} PRC URL 수정 완료. ${NC}"
 echo -e "${BOLD}${MAGENTA} RPC URK 수정하고도 안 되면 명령어 다시 쳐서 4번 실행하삼 ${NC}"
 }
 
-change_batch() {
-echo -e "${BOLD}${RED} 리츄얼 업데이트(10/7) batch_size 업데이트 시작합니다.${NC}"
-
-echo -ne "${BOLD}${MAGENTA}새로운 batch_size를 입력하세요: ${NC}"
-read -e new_batch
+update_ritual() {
+echo -e "${BOLD}${RED} 리츄얼 업데이트(10/31) 시작합니다. ${NC}"
 
 # 수정할 파일 경로
 json_1=~/infernet-container-starter/deploy/config.json
@@ -382,15 +379,15 @@ json_2=~/infernet-container-starter/projects/hello-world/container/config.json
 temp_file=$(mktemp)
 
 # 첫 번째 파일 수정
-jq --argjson batch "$new_batch" \
-    '.chain.snapshot_sync.sleep = 3 |
-     .chain.snapshot_sync.batch_size = $batch' "$json_1" > "$temp_file"
+jq '.chain.snapshot_sync.sleep = 3 |
+    .chain.snapshot_sync.batch_size = 9500 |
+	.chain.snapshot_sync.sync_period = 5' "$json_1" > "$temp_file"
 mv "$temp_file" "$json_1"
 
 # 두 번째 파일 수정
-jq --argjson batch "$new_batch" \
-    '.chain.snapshot_sync.sleep = 3 |
-     .chain.snapshot_sync.batch_size = $batch' "$json_2" > "$temp_file"
+jq '.chain.snapshot_sync.sleep = 3 |
+    .chain.snapshot_sync.batch_size = 9500 |
+	.chain.snapshot_sync.sync_period = 5' "$json_1" > "$temp_file"
 mv "$temp_file" "$json_2"
 
 # 임시 파일 삭제
@@ -457,7 +454,7 @@ echo && echo -e "${BOLD}${MAGENTA} Ritual Node 자동 설치 스크립트${NC} b
  ${GREEN} 4. Ritual Node가 멈췄어요! 재시작하기 ${NC}
  ${GREEN} 5. Ritual Node의 지갑주소를 바꾸고 싶어요 ${NC}
  ${GREEN} 6. Ritual Node의 RPC 주소를 바꾸고 싶어요 ${NC}
- ${GREEN} 7. Ritual Node의 batch size를 바꾸고 싶어요 ${NC}
+ ${GREEN} 7. Ritual Node를 업데이트하고 싶어요(10/31) ${NC}
  ${GREEN} 8. Ritual Node를 내 인생에서 지우고 싶어요 ${NC}
  ———————————————————————" && echo
 
@@ -485,7 +482,7 @@ case "$num" in
     change_RPC_Address
     ;;
 7)
-    change_batch
+    update_ritual
     ;;
 8)
     uninstall_ritual
