@@ -387,7 +387,7 @@ mv "$temp_file" "$json_1"
 # 두 번째 파일 수정
 jq '.chain.snapshot_sync.sleep = 3 |
     .chain.snapshot_sync.batch_size = 9500 |
-	.chain.snapshot_sync.sync_period = 5' "$json_1" > "$temp_file"
+	.chain.snapshot_sync.sync_period = 5' "$json_2" > "$temp_file"
 mv "$temp_file" "$json_2"
 
 # 임시 파일 삭제
