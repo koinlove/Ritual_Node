@@ -368,7 +368,7 @@ echo -e "${BOLD}${MAGENTA} PRC URL 수정 완료. ${NC}"
 echo -e "${BOLD}${MAGENTA} RPC URK 수정하고도 안 되면 명령어 다시 쳐서 4번 실행하삼 ${NC}"
 }
 
-update_ritual() {
+change_batch() {
 echo -e "${BOLD}${RED} 리츄얼 업데이트(10/7) batch_size 업데이트 시작합니다.${NC}"
 
 echo -ne "${BOLD}${MAGENTA}새로운 batch_size를 입력하세요: ${NC}"
