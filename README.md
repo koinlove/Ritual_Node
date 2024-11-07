@@ -140,7 +140,7 @@ cd ~/infernet-container-starter/deploy && docker compose up
 ![image](https://github.com/user-attachments/assets/fa0f9f0f-86bb-4b25-8083-9f673e0e20f0)
 이렇게 8번 입력하면 알아서 지워줄 거임. 다 되면 다 됐다는 문구 뜨니까 걱정 ㄴㄴ혀
 
-추가 문의사항이 있다면 봉미숙에게 문의하세요.\
+추가 문의사항이 있다면 제 메일로 문의하세요.
 
 ```bash
 curl localhost:4000/health
