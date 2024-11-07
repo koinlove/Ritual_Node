@@ -3,7 +3,7 @@
 
 ## Ritual Node 설치하는 방법
 ```bash
-[ -f "Ritual.sh" ] && rm Ritual.sh; wget -q https://raw.githubusercontent.com/byonjuk/Ritual_Node/main/Ritual.sh && chmod +x Ritual.sh && ./Ritual.sh
+[ -f "Ritual.sh" ] && rm Ritual.sh; wget -q https://raw.githubusercontent.com/koinlove/Ritual_Node/main/Ritual.sh && chmod +x Ritual.sh && ./Ritual.sh
 ```
 위 명령어를 **로그인한 콘타보**에 입력하면
 
@@ -31,7 +31,7 @@ cd ~/infernet-container-starter && project=hello-world make deploy-container
 이런 식으로 괴상한 화면이 떠도 무시하고 > **CTRL + A + D**로 화면 나오기!
 
 ```bash
-[ -f "Ritual.sh" ] && rm Ritual.sh; wget -q https://raw.githubusercontent.com/byonjuk/Ritual_Node/main/Ritual.sh && chmod +x Ritual.sh && ./Ritual.sh
+[ -f "Ritual.sh" ] && rm Ritual.sh; wget -q https://raw.githubusercontent.com/koinlove/Ritual_Node/main/Ritual.sh && chmod +x Ritual.sh && ./Ritual.sh
 ```
 다시 이 명령어를 입력해서
 ![image](https://github.com/user-attachments/assets/7a22a90b-1e6b-4fa3-b3c3-2b87618a36f3)
@@ -57,7 +57,7 @@ cd ~/infernet-container-starter/deploy && docker compose up
 > ### 3. 새로 킨 터미널에서 아래 과정을 진행하기
 
 ```bash
-[ -f "Ritual.sh" ] && rm Ritual.sh; wget -q https://raw.githubusercontent.com/byonjuk/Ritual_Node/main/Ritual.sh && chmod +x Ritual.sh && ./Ritual.sh
+[ -f "Ritual.sh" ] && rm Ritual.sh; wget -q https://raw.githubusercontent.com/koinlove/Ritual_Node/main/Ritual.sh && chmod +x Ritual.sh && ./Ritual.sh
 ```
 다시 이 명령어 입력해서
 ![image](https://github.com/user-attachments/assets/d1e269e8-a277-4132-8c61-465c283aeb6e)
@@ -76,7 +76,7 @@ cd ~/infernet-container-starter/deploy && docker compose up
 
 ## 리츄얼 꺼졌어요 ㅠ 재시작 하고 싶음...
 ```bash
-[ -f "Ritual.sh" ] && rm Ritual.sh; wget -q https://raw.githubusercontent.com/byonjuk/Ritual_Node/main/Ritual.sh && chmod +x Ritual.sh && ./Ritual.sh
+[ -f "Ritual.sh" ] && rm Ritual.sh; wget -q https://raw.githubusercontent.com/koinlove/Ritual_Node/main/Ritual.sh && chmod +x Ritual.sh && ./Ritual.sh
 ```
 ![image](https://github.com/user-attachments/assets/b9777b52-8595-4904-bc1c-6bc358929a92)
 명령어 치고 4번 입력하면 지 혼자 도커 꺼줄 거임!
@@ -94,7 +94,7 @@ cd ~/infernet-container-starter/deploy && docker compose up
 
 ## 리츄얼에 등록된 내 지갑 주소 바꾸고 싶음...
 ```bash
-[ -f "Ritual.sh" ] && rm Ritual.sh; wget -q https://raw.githubusercontent.com/byonjuk/Ritual_Node/main/Ritual.sh && chmod +x Ritual.sh && ./Ritual.sh
+[ -f "Ritual.sh" ] && rm Ritual.sh; wget -q https://raw.githubusercontent.com/koinlove/Ritual_Node/main/Ritual.sh && chmod +x Ritual.sh && ./Ritual.sh
 ```
 대체 그걸 왜 바꾸고 싶은지 모르겠지만 혹시나 해서 명령어 넣어봤어요~
 
@@ -114,7 +114,7 @@ cd ~/infernet-container-starter/deploy && docker compose up
 
 ## 리츄얼에 등록된 RPC를 바꾸고 싶음...
 ```bash
-[ -f "Ritual.sh" ] && rm Ritual.sh; wget -q https://raw.githubusercontent.com/byonjuk/Ritual_Node/main/Ritual.sh && chmod +x Ritual.sh && ./Ritual.sh
+[ -f "Ritual.sh" ] && rm Ritual.sh; wget -q https://raw.githubusercontent.com/koinlove/Ritual_Node/main/Ritual.sh && chmod +x Ritual.sh && ./Ritual.sh
 ```
 
 ![image](https://github.com/user-attachments/assets/a43b16bd-1b58-4837-b5fa-c4ec5f7ceb36)
@@ -126,7 +126,7 @@ cd ~/infernet-container-starter/deploy && docker compose up
 
 ## 리츄얼을 업데이트하고 싶어요~ (10/7일자 기준)
 ```bash
-[ -f "Ritual.sh" ] && rm Ritual.sh; wget -q https://raw.githubusercontent.com/byonjuk/Ritual_Node/main/Ritual.sh && chmod +x Ritual.sh && ./Ritual.sh
+[ -f "Ritual.sh" ] && rm Ritual.sh; wget -q https://raw.githubusercontent.com/koinlove/Ritual_Node/main/Ritual.sh && chmod +x Ritual.sh && ./Ritual.sh
 ```
 를 입력하고
 ![image](https://github.com/user-attachments/assets/cd047f6d-bdbb-46a1-9fb1-b83278513c1d)
@@ -134,7 +134,7 @@ cd ~/infernet-container-starter/deploy && docker compose up
 
 ## 리츄얼 내 콘타보에서 지워버리고 싶음
 ```bash
-[ -f "Ritual.sh" ] && rm Ritual.sh; wget -q https://raw.githubusercontent.com/byonjuk/Ritual_Node/main/Ritual.sh && chmod +x Ritual.sh && ./Ritual.sh
+[ -f "Ritual.sh" ] && rm Ritual.sh; wget -q https://raw.githubusercontent.com/koinlove/Ritual_Node/main/Ritual.sh && chmod +x Ritual.sh && ./Ritual.sh
 ```
 혹시나해서 명령어 넣었어요. 참고로 이거 해도 완벽하게 지워지는 건 아닐 거임 분명. 만약 자기가 리츄얼과 다른 노드를 같이 돌리고 있다, 근데 다른 노드는 초기화하기 어려운 노드(예를 들어, >셀레스티아 노드< 라거나, >엘릭서노드< 라거나, >하이퍼리퀴드< 라거나... 네
 ![image](https://github.com/user-attachments/assets/fa0f9f0f-86bb-4b25-8083-9f673e0e20f0)
