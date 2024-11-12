@@ -7,12 +7,9 @@
 ```
 위 명령어를 **로그인한 콘타보**에 입력하면
 
-![image](https://github.com/user-attachments/assets/d420f447-ebee-48a3-b134-d782dffa8111)
+![image](https://github.com/user-attachments/assets/6d206208-f008-4b2f-8eda-76b1df02a634)
 이런 화면이 뜰 거에용. 여기서 1번 입력!
 
-![image](https://github.com/user-attachments/assets/55d21ae6-f6b7-471b-b72a-21c6696af25d)
-
-이렇게 숫자만 입력하셔야 해요.
 
 ![image](https://github.com/user-attachments/assets/b040e024-406d-4590-a76f-d0e2e3873510)
 이런 식으로 메세지가 뜨면 설치가 완료된 것!
@@ -34,10 +31,10 @@ cd ~/infernet-container-starter && project=hello-world make deploy-container
 [ -f "Ritual.sh" ] && rm Ritual.sh; wget -q https://raw.githubusercontent.com/koinlove/Ritual_Node/main/Ritual.sh && chmod +x Ritual.sh && ./Ritual.sh
 ```
 다시 이 명령어를 입력해서
-![image](https://github.com/user-attachments/assets/7a22a90b-1e6b-4fa3-b3c3-2b87618a36f3)
+![image](https://github.com/user-attachments/assets/76ff74a2-8fd0-4225-97b2-152388215c2e)
 2번을 입력하면
 
-![image](https://github.com/user-attachments/assets/7b2e7d37-dcc1-4bfc-a99f-010a0acc980e)
+![image](https://github.com/user-attachments/assets/83d9444b-a3bc-43c0-b75f-6a5c875b46a8)
 이런 식으로 PRC 입력하는 곳과 Private key를 넣는 칸이 뜰 거에요!
 입력하고 나면 글씨가 약간 잘릴 텐데 오류 아니니 넘어가삼
 
@@ -60,7 +57,7 @@ cd ~/infernet-container-starter/deploy && docker compose up
 [ -f "Ritual.sh" ] && rm Ritual.sh; wget -q https://raw.githubusercontent.com/koinlove/Ritual_Node/main/Ritual.sh && chmod +x Ritual.sh && ./Ritual.sh
 ```
 다시 이 명령어 입력해서
-![image](https://github.com/user-attachments/assets/d1e269e8-a277-4132-8c61-465c283aeb6e)
+![image](https://github.com/user-attachments/assets/76ff74a2-8fd0-4225-97b2-152388215c2e)
 이렇게 입력하면 자동으로 절차가 진행될 텐데
 
 ![image](https://github.com/user-attachments/assets/153c73b9-ba5d-4dbe-ae8b-0f4d9f8465bf)
@@ -78,7 +75,7 @@ cd ~/infernet-container-starter/deploy && docker compose up
 ```bash
 [ -f "Ritual.sh" ] && rm Ritual.sh; wget -q https://raw.githubusercontent.com/koinlove/Ritual_Node/main/Ritual.sh && chmod +x Ritual.sh && ./Ritual.sh
 ```
-![image](https://github.com/user-attachments/assets/b9777b52-8595-4904-bc1c-6bc358929a92)
+![image](https://github.com/user-attachments/assets/76ff74a2-8fd0-4225-97b2-152388215c2e)
 명령어 치고 4번 입력하면 지 혼자 도커 꺼줄 거임!
 
 이후
@@ -98,7 +95,7 @@ cd ~/infernet-container-starter/deploy && docker compose up
 ```
 대체 그걸 왜 바꾸고 싶은지 모르겠지만 혹시나 해서 명령어 넣어봤어요~
 
-![image](https://github.com/user-attachments/assets/ba3151eb-b9e4-45c9-9cd5-e7bae0167b04)
+![image](https://github.com/user-attachments/assets/d99ba114-5646-46e5-addb-3b24d532d304)
 이렇게 넣고 대기하면 알아서 잘 진행될 거임... 대기하고 있다가
 
 ![image](https://github.com/user-attachments/assets/153c73b9-ba5d-4dbe-ae8b-0f4d9f8465bf)
@@ -117,7 +114,7 @@ cd ~/infernet-container-starter/deploy && docker compose up
 [ -f "Ritual.sh" ] && rm Ritual.sh; wget -q https://raw.githubusercontent.com/koinlove/Ritual_Node/main/Ritual.sh && chmod +x Ritual.sh && ./Ritual.sh
 ```
 
-![image](https://github.com/user-attachments/assets/a43b16bd-1b58-4837-b5fa-c4ec5f7ceb36)
+![image](https://github.com/user-attachments/assets/d41c1e7f-f95d-4119-8b1f-6948c73bd0dd)
 이렇게 잘 입력하면 자기 알아서 진행이 될 거에효. 리스타트도 알아서 진행됨.
 
 근데 만약 리스타트 했는데 RPC가 잘 안 된다? 그럴 땐 
@@ -129,7 +126,7 @@ cd ~/infernet-container-starter/deploy && docker compose up
 [ -f "Ritual.sh" ] && rm Ritual.sh; wget -q https://raw.githubusercontent.com/koinlove/Ritual_Node/main/Ritual.sh && chmod +x Ritual.sh && ./Ritual.sh
 ```
 를 입력하고
-![image](https://github.com/user-attachments/assets/cd047f6d-bdbb-46a1-9fb1-b83278513c1d)
+![image](https://github.com/user-attachments/assets/76ff74a2-8fd0-4225-97b2-152388215c2e)
 7번을 선택하면 자동으로 업데이트가 돼요~
 
 ## 리츄얼 내 콘타보에서 지워버리고 싶음
@@ -137,7 +134,7 @@ cd ~/infernet-container-starter/deploy && docker compose up
 [ -f "Ritual.sh" ] && rm Ritual.sh; wget -q https://raw.githubusercontent.com/koinlove/Ritual_Node/main/Ritual.sh && chmod +x Ritual.sh && ./Ritual.sh
 ```
 혹시나해서 명령어 넣었어요. 참고로 이거 해도 완벽하게 지워지는 건 아닐 거임 분명. 만약 자기가 리츄얼과 다른 노드를 같이 돌리고 있다, 근데 다른 노드는 초기화하기 어려운 노드(예를 들어, >셀레스티아 노드< 라거나, >엘릭서노드< 라거나, >하이퍼리퀴드< 라거나... 네
-![image](https://github.com/user-attachments/assets/fa0f9f0f-86bb-4b25-8083-9f673e0e20f0)
+![image](https://github.com/user-attachments/assets/76ff74a2-8fd0-4225-97b2-152388215c2e)
 이렇게 8번 입력하면 알아서 지워줄 거임. 다 되면 다 됐다는 문구 뜨니까 걱정 ㄴㄴ혀
 
 추가 문의사항이 있다면 제 메일로 문의하세요.
