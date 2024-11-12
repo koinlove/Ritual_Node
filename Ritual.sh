@@ -449,7 +449,7 @@ echo -e "${BOLD}${CYAN}Ritual Node와 관련된 파일들이 삭제됐습니다.
 
 
 # 메인 메뉴
-echo && echo -e "${BOLD}${MAGENTA} Ritual Node 자동 설치 스크립트${NC} by 비욘세제발죽어
+echo && echo -e "${BOLD}${MAGENTA} Ritual Node 자동 설치 스크립트${NC} by 코인러브미순
  ${CYAN}원하는 거 고르시고 실행하시고 그러세효. ${NC}
  ———————————————————————
  ${GREEN} 1. 기본파일 설치 및 Ritual Node 설치 1번(v1.4.0) ${NC}
