@@ -358,11 +358,11 @@ docker restart hello-world
 echo -e  "${CYAN}docker restart infernet-node${NC}"
 docker restart infernet-node
 
-echo -e  "${CYAN}docker restart deploy-fluentbit-1${NC}"
-docker restart deploy-fluentbit-1
+echo -e  "${CYAN}docker restart infernet-fluentbit${NC}"
+docker restart infernet-fluentbit
 
-echo -e  "${CYAN}docker restart deploy-redis-1${NC}"
-docker restart deploy-redis-1
+echo -e  "${CYAN}docker restart infernet-redis${NC}"
+docker restart infernet-redis
 
 echo -e "${BOLD}${MAGENTA} PRC URL 수정 완료. ${NC}"
 echo -e "${BOLD}${MAGENTA} RPC URK 수정하고도 안 되면 명령어 다시 쳐서 4번 실행하삼 ${NC}"
@@ -408,14 +408,14 @@ echo -e "${BOLD}${CYAN}Remove Ritual dockers...${NC}"
 docker stop infernet-anvil
 docker stop infernet-node
 docker stop hello-world
-docker stop deploy-redis-1
-docker stop deploy-fluentbit-1
+docker stop infernet-redis
+docker stop infernet-fluentbit
 
 docker rm -f infernet-anvil
 docker rm -f infernet-node
 docker rm -f hello-world
-docker rm -f deploy-redis-1
-docker rm -f deploy-fluentbit-1
+docker rm -f infernet-redis
+docker rm -f infernet-fluentbit
 
 cd ~/infernet-container-starter/deploy && docker compose down
 
@@ -453,7 +453,7 @@ echo && echo -e "${BOLD}${MAGENTA} Ritual Node 자동 설치 스크립트${NC} b
  ${CYAN}원하는 거 고르시고 실행하시고 그러세효. ${NC}
  ———————————————————————
  ${GREEN} 1. 기본파일 설치 및 Ritual Node 설치 1번(v1.4.0) ${NC}
- ${GREEN} 2. Ritual Node 설치 2번(v1.4.0)제발요 ${NC}
+ ${GREEN} 2. Ritual Node 설치 2번(v1.4.0) ${NC}
  ${GREEN} 3. Ritual Node 설치 3번(v1.4.0) ${NC}
  ${GREEN} 4. Ritual Node가 멈췄어요! 재시작하기 ${NC}
  ${GREEN} 5. Ritual Node의 지갑주소를 바꾸고 싶어요 ${NC}
