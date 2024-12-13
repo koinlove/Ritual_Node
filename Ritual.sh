@@ -121,7 +121,7 @@ jq --arg rpc "$rpc_url1" --arg priv "$private_key1" \
 	 .chain.registry_address = "0x3B1554f346DFe5c482Bb4BA31b880c1C18412170" |
      .chain.snapshot_sync.sleep = 3 |
      .chain.snapshot_sync.batch_size = 800 |
-	 .chain.snapshot_sync.starting_sub_id = 160000 |
+	 .chain.snapshot_sync.starting_sub_id = 200000 |
 	 .chain.snapshot_sync.sync_period = 30' $json_1 > $temp_file
 
 # temp_file을 원본 파일로 덮어쓰고 임시 파일 삭제
@@ -135,7 +135,7 @@ jq --arg rpc "$rpc_url1" --arg priv "$private_key1" \
 	 .chain.registry_address = "0x3B1554f346DFe5c482Bb4BA31b880c1C18412170" |
      .chain.snapshot_sync.sleep = 3 |
      .chain.snapshot_sync.batch_size = 800 |
-	 .chain.snapshot_sync.starting_sub_id = 160000 |
+	 .chain.snapshot_sync.starting_sub_id = 200000 |
 	 .chain.snapshot_sync.sync_period = 30' $json_2 > $temp_file
 
 mv $temp_file $json_2
