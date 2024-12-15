@@ -120,9 +120,9 @@ jq --arg rpc "$rpc_url1" --arg priv "$private_key1" \
 	 .chain.trail_head_blocks = 3 |
 	 .chain.registry_address = "0x3B1554f346DFe5c482Bb4BA31b880c1C18412170" |
      .chain.snapshot_sync.sleep = 3 |
-     .chain.snapshot_sync.batch_size = 800 |
+     .chain.snapshot_sync.batch_size = 950 |
 	 .chain.snapshot_sync.starting_sub_id = 200000 |
-	 .chain.snapshot_sync.sync_period = 30' $json_1 > $temp_file
+	 .chain.snapshot_sync.sync_period = 15' $json_1 > $temp_file
 
 # temp_file을 원본 파일로 덮어쓰고 임시 파일 삭제
 mv $temp_file $json_1
@@ -134,9 +134,9 @@ jq --arg rpc "$rpc_url1" --arg priv "$private_key1" \
 	 .chain.trail_head_blocks = 3 |
 	 .chain.registry_address = "0x3B1554f346DFe5c482Bb4BA31b880c1C18412170" |
      .chain.snapshot_sync.sleep = 3 |
-     .chain.snapshot_sync.batch_size = 800 |
+     .chain.snapshot_sync.batch_size = 9500 |
 	 .chain.snapshot_sync.starting_sub_id = 200000 |
-	 .chain.snapshot_sync.sync_period = 30' $json_2 > $temp_file
+	 .chain.snapshot_sync.sync_period = 15' $json_2 > $temp_file
 
 mv $temp_file $json_2
 
@@ -381,15 +381,15 @@ temp_file=$(mktemp)
 # 첫 번째 파일 수정
 jq '.chain.snapshot_sync.sleep = 3 |
     .chain.snapshot_sync.batch_size = 9500 |
-	.chain.snapshot_sync.starting_sub_id = 170000 |
-	.chain.snapshot_sync.sync_period = 5' "$json_1" > "$temp_file"
+	.chain.snapshot_sync.starting_sub_id = 200000 |
+	.chain.snapshot_sync.sync_period = 15' "$json_1" > "$temp_file"
 mv "$temp_file" "$json_1"
 
 # 두 번째 파일 수정
 jq '.chain.snapshot_sync.sleep = 3 |
     .chain.snapshot_sync.batch_size = 9500 |
-	.chain.snapshot_sync.starting_sub_id = 170000 |
-	.chain.snapshot_sync.sync_period = 5' "$json_2" > "$temp_file"
+	.chain.snapshot_sync.starting_sub_id = 200000 |
+	.chain.snapshot_sync.sync_period = 15' "$json_2" > "$temp_file"
 mv "$temp_file" "$json_2"
 
 # 임시 파일 삭제
@@ -458,7 +458,7 @@ echo && echo -e "${BOLD}${MAGENTA} Ritual Node 자동 설치 스크립트${NC} b
  ${GREEN} 4. Ritual Node가 멈췄어요! 재시작하기 ${NC}
  ${GREEN} 5. Ritual Node의 지갑주소를 바꾸고 싶어요 ${NC}
  ${GREEN} 6. Ritual Node의 RPC 주소를 바꾸고 싶어요 ${NC}
- ${GREEN} 7. Ritual Node를 업데이트하고 싶어요(10/31) ${NC}
+ ${GREEN} 7. Ritual Node를 업데이트하고 싶어요(12/15) ${NC}
  ${GREEN} 8. Ritual Node를 내 인생에서 지우고 싶어요 ${NC}
  ———————————————————————" && echo
 
