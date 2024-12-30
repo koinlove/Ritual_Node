@@ -122,7 +122,7 @@ jq --arg rpc "$rpc_url1" --arg priv "$private_key1" \
      .chain.snapshot_sync.sleep = 3 |
      .chain.snapshot_sync.batch_size = 9500 |
 	 .chain.snapshot_sync.starting_sub_id = 200000 |
-	 .chain.snapshot_sync.sync_period = 15' $json_1 > $temp_file
+	 .chain.snapshot_sync.sync_period = 30' $json_1 > $temp_file
 
 # temp_file을 원본 파일로 덮어쓰고 임시 파일 삭제
 mv $temp_file $json_1
@@ -136,7 +136,7 @@ jq --arg rpc "$rpc_url1" --arg priv "$private_key1" \
      .chain.snapshot_sync.sleep = 3 |
      .chain.snapshot_sync.batch_size = 9500 |
 	 .chain.snapshot_sync.starting_sub_id = 200000 |
-	 .chain.snapshot_sync.sync_period = 15' $json_2 > $temp_file
+	 .chain.snapshot_sync.sync_period = 30' $json_2 > $temp_file
 
 mv $temp_file $json_2
 
@@ -382,14 +382,14 @@ temp_file=$(mktemp)
 jq '.chain.snapshot_sync.sleep = 3 |
     .chain.snapshot_sync.batch_size = 9500 |
 	.chain.snapshot_sync.starting_sub_id = 200000 |
-	.chain.snapshot_sync.sync_period = 15' "$json_1" > "$temp_file"
+	.chain.snapshot_sync.sync_period = 30' "$json_1" > "$temp_file"
 mv "$temp_file" "$json_1"
 
 # 두 번째 파일 수정
 jq '.chain.snapshot_sync.sleep = 3 |
     .chain.snapshot_sync.batch_size = 9500 |
 	.chain.snapshot_sync.starting_sub_id = 200000 |
-	.chain.snapshot_sync.sync_period = 15' "$json_2" > "$temp_file"
+	.chain.snapshot_sync.sync_period = 30' "$json_2" > "$temp_file"
 mv "$temp_file" "$json_2"
 
 # 임시 파일 삭제
