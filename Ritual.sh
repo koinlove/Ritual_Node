@@ -120,7 +120,7 @@ jq --arg rpc "$rpc_url1" --arg priv "$private_key1" \
 	 .chain.trail_head_blocks = 3 |
 	 .chain.registry_address = "0x3B1554f346DFe5c482Bb4BA31b880c1C18412170" |
      .chain.snapshot_sync.sleep = 3 |
-     .chain.snapshot_sync.batch_size = 950 |
+     .chain.snapshot_sync.batch_size = 9500 |
 	 .chain.snapshot_sync.starting_sub_id = 200000 |
 	 .chain.snapshot_sync.sync_period = 15' $json_1 > $temp_file
 
