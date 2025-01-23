@@ -132,6 +132,11 @@ cd ~/infernet-container-starter/deploy && docker compose up
 ## 리츄얼 업다운을 해도 용량이 안 비워져요...
 
 ```bash
+sudo du -ah / | sort -rh | head -20
+```
+로 용량 확인해 보시고(안 해도 됨)
+
+```bash
 sudo truncate -s 0 /var/log/syslog
 sudo truncate -s 0 /var/log/syslog.1
 ```
