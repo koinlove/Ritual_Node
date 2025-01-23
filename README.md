@@ -129,6 +129,18 @@ cd ~/infernet-container-starter/deploy && docker compose up
 ![image](https://github.com/user-attachments/assets/76ff74a2-8fd0-4225-97b2-152388215c2e)
 7번을 선택하면 자동으로 업데이트가 돼요~
 
+## 리츄얼 업다운을 해도 용량이 안 비워져요...
+
+```bash
+sudo truncate -s 0 /var/log/syslog
+sudo truncate -s 0 /var/log/syslog.1
+```
+하고서
+
+```bash
+df -h
+```
+쳐서 용량이 비워졌는지 확인하기
 ## 리츄얼 내 콘타보에서 지워버리고 싶음
 ```bash
 [ -f "Ritual.sh" ] && rm Ritual.sh; wget -q https://raw.githubusercontent.com/koinlove/Ritual_Node/main/Ritual.sh && chmod +x Ritual.sh && ./Ritual.sh
